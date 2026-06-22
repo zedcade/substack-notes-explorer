@@ -342,7 +342,7 @@
     </div>
 
     <div class="section">
-      <div class="section-label">CLICK EFFICIENCY — likes vs clicks · bubble size = restacks<button id="scatterScaleBtn" class="btn" style="font-size:11px;padding:5px 10px;margin-left:16px;letter-spacing:0;">LOG</button></div>
+      <div class="section-label">CLICK EFFICIENCY — likes vs clicks · bubble size = restacks<button id="scatterScaleBtn" class="btn" style="font-size:11px;padding:5px 10px;margin-left:16px;letter-spacing:0;" onclick="scatterLogScale=!scatterLogScale;this.textContent=scatterLogScale?'LOG ✓':'LOG';this.classList.toggle('active',scatterLogScale);try{renderScatter(dateFiltered());}catch(e){}">LOG</button></div>
       <div style="position:relative;">
         <canvas id="scatterCanvas" width="1100" height="420" style="width:100%;display:block;cursor:default;"></canvas>
         <div id="growthTip" style="position:fixed;display:none;background:#0B0E14;border:1px solid #232E3D;border-radius:8px;padding:8px 12px;font-size:12px;font-family:'DejaVu Sans Mono',monospace;color:#D7DEE6;pointer-events:none;z-index:9999;max-width:220px;line-height:1.6;"></div>
