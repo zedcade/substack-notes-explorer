@@ -1086,9 +1086,10 @@ function renderKPIs(scoped){
   // Engagement/note: (likes + restacks + comments) ÷ own notes
   const engagement = nOwn > 0 ? ((likes + restacks + comments) / nOwn) : 0;
 
-  // Click-through rate: clicks ÷ impressions proxy (likes × 3)
-  const impressions = likes * 3;
-  const ctr = impressions > 0 ? (clicks / impressions * 100) : 0;
+  // Avg clicks per own note (honest metric — impressions not exposed by Substack)
+  const avgClicksNote = nOwn > 0 ? clicks / nOwn : 0;
+  // Clicks-to-likes ratio (how many clicks per like — action rate)
+  const clicksLikesRatio = likes > 0 ? clicks / likes : 0;
 
   // Sub conversion rate: subs ÷ clicks (not ÷ notes)
   const subConvRate = clicks > 0 ? (subs / clicks * 100) : 0;
@@ -1143,21 +1144,22 @@ function renderKPIs(scoped){
       { ok:3, good:8, great:15, unit:'', note:'Substack avg ~5–8 for active accounts. Top creators hit 20+.' }
     ),
 
-    // 2. Clicks Driven + CTR sub
+    // 2. Clicks Driven — avg clicks/note + action rate (clicks/likes)
     card(
       fmtNum(clicks), 'var(--text)',
       'CLICKS DRIVEN',
-      ctr > 0
-        ? `CTR&nbsp;<b style="color:var(--amber)">${ctr.toFixed(1)}%</b>&nbsp;<span style="color:var(--dim2);font-size:11px;">clicks &divide; (likes&times;3)</span>`
-        : `CTR&nbsp;<b style="color:var(--dim)">—</b>`,
-      ctr,
-      { ok:1, good:3, great:6, unit:'%', note:'CTR = clicks ÷ (likes×3 as impression proxy). 3–5% is solid; 6%+ is exceptional.' }
+      nOwn > 0
+        ? `avg&nbsp;<b style="color:var(--amber)">${avgClicksNote.toFixed(1)}</b>&nbsp;<span style="color:var(--dim2);font-size:11px;">clicks/note</span>`
+          + (likes > 0 ? `&ensp;<span style="color:var(--dim2);font-size:11px;">${clicksLikesRatio.toFixed(2)}x clicks/like</span>` : '')
+        : `<b style="color:var(--dim)">—</b>`,
+      avgClicksNote,
+      { ok:2, good:8, great:20, unit:' clicks/note', note:'Avg clicks per own note. Substack does not expose impressions, so this is the most honest reach metric available. 8+ is solid; 20+ is strong.' }
     ),
 
     // 3. Subscribers Gained — free · paid · ARR · paid%
     card(
       fmtNum(subs), 'var(--green)',
-      'SUBSCRIBERS GAINED',
+      'SUBS FROM NOTES',
       [
         `free&nbsp;<b>${fmtNum(freeSubs)}</b>`,
         `paid&nbsp;<b style="color:var(--amber)">${fmtNum(paidSubs)}</b>`,
