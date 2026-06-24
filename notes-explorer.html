@@ -116,7 +116,7 @@
   .section{margin-top:14px;margin-bottom:40px;}
   .section-label{font-family:"DejaVu Sans Mono",monospace;font-size:14px;letter-spacing:3px;color:var(--cyan);font-weight:bold;margin-bottom:16px;
     display:flex;justify-content:space-between;align-items:center;}
-  .panel{background:var(--panel);border:1px solid var(--panel-border);border-radius:14px;padding:28px;}
+  .panel{background:var(--panel);border:1px solid var(--panel-border);border-radius:14px;padding:28px;overflow:visible;}
   .caption{margin-top:16px;font-size:15px;line-height:1.55;color:var(--dim);}
   .caption b{color:var(--text);}
 
@@ -124,19 +124,6 @@
   .legend-item{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--text);}
   .swatch{width:14px;height:14px;border-radius:4px;display:inline-block;}
 
-  .map-grid{display:grid;gap:3px;}
-  .cell{position:relative;height:21px;border-radius:3px;cursor:pointer;transition:opacity .15s,transform .1s;}
-  .cell:hover{transform:scale(1.35);z-index:5;}
-  .cell.dim{opacity:0.12;}
-  .cell.empty{background:var(--panel2)!important;cursor:default;}
-  .cell.empty:hover{transform:none;}
-  .cell[data-type="original"]{background:#E8A33D;}
-  .cell[data-type="promo"]{background:#C9701E;}
-  .cell[data-type="curated"]{background:#F0E080;}
-  .cell[data-type="restack"]{background:#4FD1C5;}
-  .cell[data-type="converted"]{background:#5FBF73;}
-  .cell.top10{box-shadow:0 0 0 2px #fff6 inset,0 0 6px 1px #E8A33D88;}
-  .cell.top10::after{content:'';position:absolute;top:2px;right:2px;width:4px;height:4px;border-radius:50%;background:#fff;opacity:0.9;pointer-events:none;}
   .legend-item[data-filter-type]{cursor:pointer;}
   .legend-item[data-filter-type]:hover{opacity:0.75!important;}
 
@@ -245,7 +232,7 @@
         <div>
           <p style="margin:0 0 10px;"><b>Method B</b> <span style="color:var(--dim);font-size:12px;">(drag to bookmarks bar)</span><br>Drag the button below directly to your bookmarks bar.</p>
           <a class="bookmarklet-btn" id="bookmarkletBtn"
-            href="javascript:%28function%20%28%29%20%7B%0A%27use%20strict%27%3B%0Afunction%20createOverlay%28%29%20%7B%0Aconst%20existing%20%3D%20document.getElementById%28%27__notes_extractor_overlay__%27%29%3B%0Aif%20%28existing%29%20existing.remove%28%29%3B%0Aconst%20box%20%3D%20document.createElement%28%27div%27%29%3B%0Abox.id%20%3D%20%27__notes_extractor_overlay__%27%3B%0Abox.style.cssText%20%3D%20%27position%3Afixed%3Bbottom%3A24px%3Bright%3A24px%3Bwidth%3A360px%3Bz-index%3A999999%3Bbackground%3A%230B0E14%3Bcolor%3A%23D7DEE6%3Bborder%3A1px%20solid%20%23E8A33D%3Bborder-radius%3A12px%3Bpadding%3A18px%2020px%3Bfont-family%3Amonospace%3Bfont-size%3A13px%3Bbox-shadow%3A0%208px%2030px%20rgba%280%2C0%2C0%2C0.5%29%3B%27%3B%0Abox.innerHTML%20%3D%20%27%3Cdiv%20style%3D%22font-weight%3Abold%3Bcolor%3A%23E8A33D%3Bletter-spacing%3A1px%3Bmargin-bottom%3A10px%3B%22%3ENOTES%20EXPLORER%20%3C%2Fdiv%3E%3Cdiv%20id%3D%22__ne_text__%22%20style%3D%22margin-bottom%3A6px%3Bline-height%3A1.4%3B%22%3EStarting%5Cu2026%3C%2Fdiv%3E%3Cdiv%20id%3D%22__ne_eta__%22%20style%3D%22margin-bottom%3A8px%3Bfont-size%3A11px%3Bcolor%3A%235B6573%3Bmin-height%3A14px%3B%22%3E%3C%2Fdiv%3E%3Cdiv%20style%3D%22background%3A%23232E3D%3Bborder-radius%3A6px%3Bheight%3A8px%3Boverflow%3Ahidden%3B%22%3E%3Cdiv%20id%3D%22__ne_bar__%22%20style%3D%22background%3A%23E8A33D%3Bheight%3A100%25%3Bwidth%3A0%25%3Btransition%3Awidth%20.2s%3B%22%3E%3C%2Fdiv%3E%3C%2Fdiv%3E%3Cdiv%20id%3D%22__ne_close__%22%20style%3D%22margin-top%3A10px%3Btext-align%3Aright%3Bcolor%3A%235B6573%3Bcursor%3Apointer%3Bdisplay%3Anone%3B%22%3Eclose%20%5Cu2715%3C%2Fdiv%3E%27%3B%0Adocument.body.appendChild%28box%29%3B%0Areturn%20%7B%0Aupdate%28text%2C%20pct%2C%20eta%29%20%7B%0Aconst%20t%3Ddocument.getElementById%28%27__ne_text__%27%29%2C%20b%3Ddocument.getElementById%28%27__ne_bar__%27%29%2C%20e%3Ddocument.getElementById%28%27__ne_eta__%27%29%3B%0Aif%28t%29%20t.textContent%3Dtext%3B%0Aif%28b%20%26%26%20typeof%20pct%3D%3D%3D%27number%27%29%20b.style.width%3DMath.max%280%2CMath.min%28100%2Cpct%29%29%2B%27%25%27%3B%0Aif%28e%29%20e.textContent%3Deta%7C%7C%27%27%3B%0A%7D%2C%0Adone%28text%29%20%20%7B%20this.update%28text%2C100%29%3B%20const%20c%3Ddocument.getElementById%28%27__ne_close__%27%29%3B%20if%28c%29%7Bc.style.display%3D%27block%27%3Bc.onclick%3D%28%29%3D%3Ebox.remove%28%29%3B%7D%20%7D%2C%0Aerror%28text%29%20%7B%20const%20t%3Ddocument.getElementById%28%27__ne_text__%27%29%3B%20if%28t%29%7Bt.textContent%3Dtext%3Bt.style.color%3D%27%23E8677A%27%3B%7D%20const%20c%3Ddocument.getElementById%28%27__ne_close__%27%29%3B%20if%28c%29%7Bc.style.display%3D%27block%27%3Bc.onclick%3D%28%29%3D%3Ebox.remove%28%29%3B%7D%20%7D%0A%7D%3B%0A%7D%0Afunction%20sleep%28ms%29%20%7B%20return%20new%20Promise%28r%3D%3EsetTimeout%28r%2Cms%29%29%3B%20%7D%0Afunction%20downloadAsJson%28data%2C%20filename%29%20%7B%0Aconst%20blob%3Dnew%20Blob%28%5BJSON.stringify%28data%29%5D%2C%7Btype%3A%27application%2Fjson%27%7D%29%3B%0Aconst%20url%3DURL.createObjectURL%28blob%29%3B%0Aconst%20a%3Ddocument.createElement%28%27a%27%29%3B%0Aa.href%3Durl%3B%20a.download%3Dfilename%3B%0Adocument.body.appendChild%28a%29%3B%20a.click%28%29%3B%20document.body.removeChild%28a%29%3B%0AURL.revokeObjectURL%28url%29%3B%0A%7D%0Afunction%20resolveAuthorId%28activityData%2C%20pageHandle%29%20%7B%0Aif%28activityData%3F.pubs%3F.length%29%20return%20activityData.pubs%5B0%5D.author_id%3B%0Aif%28activityData%3F.subscriptions%3F.length%29%7B%0Aconst%20sub%3DactivityData.subscriptions%5B0%5D%3B%0Areturn%20sub.author_id%7C%7Csub.publication%3F.author_id%7C%7Cnull%3B%0A%7D%0Aif%28activityData%3F.publication%3F.author_id%29%20return%20activityData.publication.author_id%3B%0Aif%28activityData%3F.user%3F.id%29%20return%20activityData.user.id%3B%0Aconst%20handle%3D%28pageHandle%7C%7C%27%27%29.replace%28%2F%5E%40%2F%2C%27%27%29.toLowerCase%28%29%3B%0Aconst%20users%3DArray.isArray%28activityData%3F.users%29%3FactivityData.users%3A%5B%5D%3B%0Aif%28handle%26%26users.length%29%7B%0Aconst%20u%3Dusers.find%28u%3D%3E%28u%3F.handle%7C%7Cu%3F.username%7C%7C%27%27%29.replace%28%2F%5E%40%2F%2C%27%27%29.toLowerCase%28%29%3D%3D%3Dhandle%29%3B%0Aif%28u%29%20return%20u.id%7C%7Cu.user_id%7C%7Cnull%3B%0A%7D%0Aconst%20buckets%3D%5BactivityData%3F.feedItemComments%2C%20activityData%3F.comments%5D%3B%0Afor%28const%20bucket%20of%20buckets%29%7B%0Aif%28%21Array.isArray%28bucket%29%29%20continue%3B%0Afor%28const%20item%20of%20bucket%29%7B%0Aconst%20c%3Ditem%3F.comment%7C%7Citem%3B%0Aconst%20h%3D%28c%3F.handle%7C%7Cc%3F.user%3F.handle%7C%7C%27%27%29.replace%28%2F%5E%40%2F%2C%27%27%29.toLowerCase%28%29%3B%0Aif%28handle%26%26h%3D%3D%3Dhandle%29%20return%20c.user_id%7C%7Cc.user%3F.id%7C%7Cnull%3B%0A%7D%0A%7D%0Areturn%20null%3B%0A%7D%0Afunction%20scanPageForAuthorId%28handle%29%20%7B%0Aconst%20links%3DArray.from%28document.querySelectorAll%28%27a%5Bhref%2A%3D%22%2Fprofile%2F%22%5D%27%29%29%3B%0Aif%28handle%29%7B%0Aconst%20exact%3Dnew%20RegExp%28%60%2Fprofile%2F%28%5C%5Cd%2B%29-%24%7Bhandle.replace%28%2F%5B.%2A%2B%3F%5E%24%7B%7D%28%29%7C%5B%5C%5D%5C%5C%5D%2Fg%2C%27%5C%5C%24%26%27%29%7D%28%3F%3A%5B%2F%22%3F%5D%7C%24%29%60%2C%27i%27%29%3B%0Afor%28const%20link%20of%20links%29%7Bconst%20m%3D%28link.getAttribute%28%27href%27%29%7C%7C%27%27%29.match%28exact%29%3Bif%28m%29return%20parseInt%28m%5B1%5D%2C10%29%3B%7D%0A%7D%0Afor%28const%20link%20of%20links%29%7Bconst%20m%3D%28link.getAttribute%28%27href%27%29%7C%7C%27%27%29.match%28%2F%5C%2Fprofile%5C%2F%28%5Cd%2B%29-%2F%29%3Bif%28m%29return%20parseInt%28m%5B1%5D%2C10%29%3B%7D%0Areturn%20null%3B%0A%7D%0Afunction%20trimAttachment%28att%29%20%7B%0Aif%28%21att%29%20return%20null%3B%0Aconst%20out%3D%7Btype%3Aatt.type%7D%3B%0Aif%28att.type%3D%3D%3D%27post%27%26%26att.post%29%7B%0Aout.post%3D%7Bid%3Aatt.post.id%2Ctitle%3Aatt.post.title%2Ccanonical_url%3Aatt.post.canonical_url%7D%3B%0Aif%28att.publication%29%20out.publication%3D%7Bauthor_id%3Aatt.publication.author_id%2Cname%3Aatt.publication.name%7D%3B%0A%7D%20else%20if%28att.type%3D%3D%3D%27comment%27%26%26att.comment%29%7B%0Aout.comment%3D%7Bid%3Aatt.comment.id%2Cuser_id%3Aatt.comment.user_id%2Cname%3Aatt.comment.name%7C%7Catt.comment.user%3F.name%7C%7Cnull%2Chandle%3Aatt.comment.handle%7C%7Catt.comment.user%3F.handle%7C%7Cnull%7D%3B%0A%7D%0Areturn%20out%3B%0A%7D%0Aasync%20function%20fetchNoteStats%28commentId%29%20%7B%0Afor%28let%20attempt%3D0%3B%20attempt%3C4%3B%20attempt%2B%2B%29%7B%0Atry%20%7B%0Aconst%20resp%3Dawait%20fetch%28%60https%3A%2F%2Fsubstack.com%2Fapi%2Fv1%2Freader%2Fcomment%2F%24%7BcommentId%7D%2Fstats%60%2C%7Bmethod%3A%27GET%27%2Cheaders%3A%7BAccept%3A%27%2A%2F%2A%27%7D%2Ccredentials%3A%27include%27%7D%29%3B%0Aif%28resp.status%3D%3D%3D200%29%7B%0Aconst%20data%3Dawait%20resp.json%28%29%3B%0Aconst%20s%3Ddata%3F.item%3F.feedItemStats%7C%7C%7B%7D%3B%0Areturn%20%7Btotal_follows%3As.total_follows%7C%7C0%2Ctotal_paid_subscriptions%3As.total_paid_subscriptions%7C%7C0%2Ctotal_free_subscriptions%3As.total_free_subscriptions%7C%7C0%2Ctotal_arr%3As.total_arr%7C%7C0%2Ctotal_clicks%3As.total_clicks%7C%7C0%2Ctotal_share_clicks%3As.total_share_clicks%7C%7C0%7D%3B%0A%7D%0Aif%28resp.status%3D%3D%3D429%29%7B%20await%20sleep%28%5B15000%2C30000%2C60000%5D%5Battempt%5D%7C%7C60000%29%3B%20continue%3B%20%7D%0Areturn%20null%3B%0A%7D%20catch%28e%29%7B%20if%28attempt%3C3%29%20await%20sleep%282000%29%3B%20else%20return%20null%3B%20%7D%0A%7D%0Areturn%20null%3B%0A%7D%0Aasync%20function%20fetchStatsPool%28items%2C%20concurrency%2C%20onProgress%2C%20onCheckpoint%29%20%7B%0Aconst%20EMPTY%3D%7Btotal_follows%3A0%2Ctotal_paid_subscriptions%3A0%2Ctotal_free_subscriptions%3A0%2Ctotal_arr%3A0%2Ctotal_clicks%3A0%2Ctotal_share_clicks%3A0%7D%3B%0Alet%20nextIdx%3D0%2C%20done%3D0%3B%0Aconst%20startTime%3DDate.now%28%29%3B%0Aasync%20function%20worker%28%29%20%7B%0Awhile%28nextIdx%20%3C%20items.length%29%7B%0Aconst%20i%3DnextIdx%2B%2B%3B%0Aitems%5Bi%5D.stats%20%3D%20%28await%20fetchNoteStats%28items%5Bi%5D.id%29%29%20%7C%7C%20EMPTY%3B%0Adone%2B%2B%3B%0Aconst%20elapsed%3D%28Date.now%28%29-startTime%29%2F1000%3B%0Aconst%20rate%3Delapsed%3E0%3Fdone%2Felapsed%3A0%3B%0Aconst%20remaining%3Ditems.length-done%3B%0Aconst%20etaSec%3Drate%3E0%3FMath.round%28remaining%2Frate%29%3Anull%3B%0Aconst%20etaStr%3DetaSec%3D%3D%3Dnull%3F%27%27%3AetaSec%3E3600%3F%60~%24%7BMath.round%28etaSec%2F3600%29%7Dh%20remaining%60%3AetaSec%3E60%3F%60~%24%7BMath.round%28etaSec%2F60%29%7Dm%20remaining%60%3A%60~%24%7BetaSec%7Ds%20remaining%60%3B%0AonProgress%28done%2C%20items.length%2C%20etaStr%29%3B%0Aif%28done%2550%3D%3D%3D0%20%26%26%20done%3Citems.length%29%20onCheckpoint%28%29%3B%0A%7D%0A%7D%0Aconst%20workers%3D%5B%5D%3B%0Afor%28let%20w%3D0%3B%20w%3CMath.min%28concurrency%2C%20items.length%29%3B%20w%2B%2B%29%7B%0Aawait%20sleep%28w%2A150%29%3B%0Aworkers.push%28worker%28%29%29%3B%0A%7D%0Aawait%20Promise.all%28workers%29%3B%0A%7D%0Aconst%20LS_KEY%3D%27__ne_partial__%27%3B%0Afunction%20savePartial%28authorId%2C%20items%29%7B%20try%7B%20localStorage.setItem%28LS_KEY%2CJSON.stringify%28%7Bauthor_id%3AauthorId%2Citems%2Csaved_at%3ADate.now%28%29%7D%29%29%3B%20%7Dcatch%28e%29%7B%7D%20%7D%0Afunction%20loadPartial%28%29%7B%20try%7B%20const%20r%3DlocalStorage.getItem%28LS_KEY%29%3B%20return%20r%3FJSON.parse%28r%29%3Anull%3B%20%7Dcatch%28e%29%7B%20return%20null%3B%20%7D%20%7D%0Afunction%20clearPartial%28%29%7B%20try%7B%20localStorage.removeItem%28LS_KEY%29%3B%20%7Dcatch%28e%29%7B%7D%20%7D%0Aasync%20function%20run%28%29%20%7B%0Aconst%20onProfilePage%3Dwindow.location.pathname.startsWith%28%27%2F%40%27%29%3B%0Aif%28window.location.hostname%21%3D%3D%27substack.com%27%7C%7C%21onProfilePage%29%7B%0Aalert%28%27This%20needs%20to%20run%20on%20your%20own%20profile%20page%3A%20substack.com%2F%40yourhandle%5Cn%5Cn1.%20Go%20to%20substack.com%2F%40yourhandle%5Cn2.%20Make%20sure%20you%5C%27re%20logged%20in%5Cn3.%20Click%20this%20bookmark%20again%20from%20there%5Cn%5CnYou%5C%27re%20currently%20on%3A%20%27%2B%28window.location.href%7C%7C%27%28local%20file%29%27%29%29%3B%0Areturn%3B%0A%7D%0Aconst%20ui%3DcreateOverlay%28%29%3B%0Atry%20%7B%0Aui.update%28%27Resolving%20your%20account%5Cu2026%27%2C2%29%3B%0Aconst%20pageHandle%3Dwindow.location.pathname.replace%28%2F%5E%5C%2F%40%2F%2C%27%27%29.split%28%27%2F%27%29%5B0%5D%7C%7C%27%27%3B%0Aconst%20activityResp%3Dawait%20fetch%28%27https%3A%2F%2Fsubstack.com%2Fapi%2Fv1%2Factivity-feed-web%3Ffilter%3Dall%27%2C%7Bmethod%3A%27GET%27%2Cheaders%3A%7BAccept%3A%27%2A%2F%2A%27%2CReferer%3Awindow.location.href%2C%27User-Agent%27%3Anavigator.userAgent%7D%2Ccredentials%3A%27include%27%7D%29%3B%0Aif%28%21activityResp.ok%29%20throw%20new%20Error%28%60Couldn%27t%20reach%20Substack%20%28status%20%24%7BactivityResp.status%7D%29.%20Are%20you%20logged%20in%3F%60%29%3B%0Aconst%20activityData%3Dawait%20activityResp.json%28%29%3B%0Alet%20authorId%3DresolveAuthorId%28activityData%2C%20pageHandle%29%3B%0Aif%28%21authorId%29%7B%20ui.update%28%27Scanning%20page%20for%20your%20ID%5Cu2026%27%2C3%29%3B%20authorId%3DscanPageForAuthorId%28pageHandle%29%3B%20%7D%0Aif%28%21authorId%29%7B%0Aconsole.log%28%27activity-feed-web%20response%3A%27%2CactivityData%29%3B%0Aconst%20manual%3Dwindow.prompt%28%27Could%20not%20auto-detect%20your%20ID.%5CnFind%20it%20in%20a%20note%20URL%3A%20substack.com%2Fprofile%2F123456-name%2Fnote%2F...%5Cn%5CnEnter%20numeric%20ID%3A%27%29%3B%0Aif%28%21manual%7C%7C%21%2F%5E%5Cd%2B%24%2F.test%28manual.trim%28%29%29%29%7Bui.error%28%27Cancelled.%27%29%3B%20return%3B%7D%0AauthorId%3DparseInt%28manual.trim%28%29%2C10%29%3B%0A%7D%0Aconst%20partial%3DloadPartial%28%29%3B%0Alet%20cachedStats%3D%7B%7D%3B%0Aif%28partial%26%26partial.author_id%3D%3D%3DauthorId%29%7B%0Aconst%20fetched%3Dpartial.items.filter%28it%3D%3Eit.stats%21%3D%3Dnull%29.length%3B%0Aif%28fetched%3E0%29%7B%0Aconst%20ageMin%3DMath.round%28%28Date.now%28%29-%28partial.saved_at%7C%7C0%29%29%2F60000%29%3B%0Aconst%20resume%3Dconfirm%28%60Found%20partial%20export%20from%20%24%7BageMin%7D%20min%20ago%20%28%24%7Bfetched%7D%20stats%20already%20fetched%29.%5Cn%5CnResume%3F%20OK%20%3D%20resume%2C%20Cancel%20%3D%20start%20fresh%60%29%3B%0Aif%28resume%29%7B%20partial.items.forEach%28it%3D%3E%7Bif%28it.stats%21%3D%3Dnull%29cachedStats%5Bit.id%5D%3Dit.stats%3B%7D%29%3B%20%7D%0Aelse%20clearPartial%28%29%3B%0A%7D%0A%7D%0Alet%20allItems%3D%5B%5D%2C%20cursor%3Dnull%2C%20page%3D0%2C%20_pubCapture%3Dnull%3B%0Ado%20%7B%0Apage%2B%2B%3B%0Aui.update%28%60Fetching%20notes%5Cu2026%20%28page%20%24%7Bpage%7D%2C%20%24%7BallItems.length%7D%20so%20far%29%60%2C5%2BMath.min%28page%2A2%2C25%29%29%3B%0Alet%20url%3D%60https%3A%2F%2Fsubstack.com%2Fapi%2Fv1%2Freader%2Ffeed%2Fprofile%2F%24%7BauthorId%7D%60%3B%0Aif%28cursor%29%20url%2B%3D%60%3Fcursor%3D%24%7Bcursor%7D%60%3B%0Aconst%20resp%3Dawait%20fetch%28url%2C%7Bmethod%3A%27GET%27%2Cheaders%3A%7BAccept%3A%27%2A%2F%2A%27%2CReferer%3Awindow.location.href%2C%27User-Agent%27%3Anavigator.userAgent%7D%2Ccredentials%3A%27include%27%7D%29%3B%0Aif%28%21resp.ok%29%20throw%20new%20Error%28%60Feed%20request%20failed%20%28status%20%24%7Bresp.status%7D%29.%20Account%20ID%20may%20be%20wrong.%60%29%3B%0Aconst%20data%3Dawait%20resp.json%28%29%3B%0Aif%28Array.isArray%28data.items%29%29%7B%0Aconst%20items%3Ddata.items.filter%28item%3D%3Eitem.type%3D%3D%3D%27comment%27%26%26item.comment%29.map%28item%3D%3E%7B%0Aconst%20c%3Ditem.comment%3B%0Aif%28%21_pubCapture%26%26String%28c.user_id%29%3D%3D%3DString%28authorId%29%26%26c.user_primary_publication%29%20_pubCapture%3Dc.user_primary_publication%3B%0Areturn%20%7Bid%3Ac.id%2Cbody%3Ac.body%2Cuser_id%3Ac.user_id%2Cname%3Ac.name%7C%7Cc.user%3F.name%7C%7Cnull%2Chandle%3Ac.handle%7C%7Cc.user%3F.handle%7C%7Cnull%2Creactions%3Ac.reactions%7C%7C%7B%7D%2Crestacks%3Ac.restacks%7C%7C0%2Cchildren_count%3Ac.children_count%3F%3Fc.comment_count%3F%3Fc.reply_count%3F%3Fnull%2Cattachments%3A%28c.attachments%7C%7C%5B%5D%29.map%28trimAttachment%29%2Cpublished_at%3Ac.date%2Cstats%3Anull%7D%3B%0A%7D%29%3B%0AallItems%3DallItems.concat%28items%29%3B%0A%7D%0Acursor%3Ddata.nextCursor%3B%0Aif%28cursor%29%20await%20sleep%28300%29%3B%0A%7D%20while%28cursor%29%3B%0Aconst%20ownItems%3DallItems.filter%28n%3D%3EString%28n.user_id%29%3D%3D%3DString%28authorId%29%29%3B%0Aconst%20otherItems%3DallItems.filter%28n%3D%3EString%28n.user_id%29%21%3D%3DString%28authorId%29%29%3B%0Aconst%20needStats%3DownItems.filter%28it%3D%3E%7B%20if%28cachedStats%5Bit.id%5D%29%7Bit.stats%3DcachedStats%5Bit.id%5D%3Breturn%20false%3B%7D%20return%20true%3B%20%7D%29%3B%0Aconst%20alreadyDone%3DownItems.length-needStats.length%3B%0Aif%28needStats.length%3E0%29%7B%0Aui.update%28%60Fetching%20stats%20for%20%24%7BneedStats.length%7D%20notes%20%286%20parallel%29%5Cu2026%60%2C30%29%3B%0Aawait%20fetchStatsPool%28%0AneedStats%2C%206%2C%0A%28done%2C%20n%2C%20eta%29%3D%3E%7B%0Aconst%20overall%3DalreadyDone%2Bdone%3B%0Aconst%20pct%3D30%2BMath.round%28%28overall%2FMath.max%28ownItems.length%2C1%29%29%2A68%29%3B%0Aui.update%28%60Stats%3A%20%24%7Boverall%7D%2F%24%7BownItems.length%7D%60%2Cpct%2Ceta%29%3B%0A%7D%2C%0A%28%29%3D%3EsavePartial%28authorId%2C%20allItems%29%20%20%20%2F%2F%20checkpoint%3A%20allItems%20already%20has%20.stats%20written%20in-place%0A%29%3B%0A%7D%0Aconst%20EMPTY%3D%7Btotal_follows%3A0%2Ctotal_paid_subscriptions%3A0%2Ctotal_free_subscriptions%3A0%2Ctotal_arr%3A0%2Ctotal_clicks%3A0%2Ctotal_share_clicks%3A0%7D%3B%0AotherItems.forEach%28n%3D%3E%7Bn.stats%3DEMPTY%3B%7D%29%3B%0Aui.update%28%27Done%20%5Cu2014%20preparing%20download%5Cu2026%27%2C99%29%3B%0AclearPartial%28%29%3B%0Aconst%20ordered%3D%5B...ownItems%2C...otherItems%5D.sort%28%28a%2Cb%29%3D%3Enew%20Date%28b.published_at%29-new%20Date%28a.published_at%29%29%3B%0AdownloadAsJson%28%7Bauthor_id%3AauthorId%2Cpublication%3A_pubCapture%7C%7Cundefined%2Citems%3Aordered%7D%2C%60%24%7BpageHandle%3FpageHandle%2B%27_%27%3A%27%27%7Dsubstack_notes_export_%24%7Bnew%20Date%28%29.toISOString%28%29.slice%280%2C16%29.replace%28%27T%27%2C%27_%27%29.replace%28%27%3A%27%2C%27-%27%29%7D.json%60%29%3B%0Aui.done%28%60%5Cu2705%20Done%21%20%24%7Bordered.length%7D%20notes%20%28%24%7BownItems.length%7D%20yours%20%2B%20%24%7BotherItems.length%7D%20restacks%29.%20Drop%20the%20file%20into%20the%20dashboard.%60%29%3B%0A%7D%20catch%28err%29%7B%0Aconsole.error%28err%29%3B%0Aui.error%28%27%5Cu274C%20%27%2B%28err%3F.message%7C%7C%27Something%20went%20wrong%20%5Cu2014%20see%20console%20for%20details.%27%29%29%3B%0A%7D%0A%7D%0Arun%28%29%3B%0A%7D%29%28%29%3B"
+            href="javascript:%28function%20%28%29%20%7B%0A%27use%20strict%27%3B%0Afunction%20createOverlay%28%29%20%7B%0Aconst%20existing%20%3D%20document.getElementById%28%27__notes_extractor_overlay__%27%29%3B%0Aif%20%28existing%29%20existing.remove%28%29%3B%0Aconst%20box%20%3D%20document.createElement%28%27div%27%29%3B%0Abox.id%20%3D%20%27__notes_extractor_overlay__%27%3B%0Abox.style.cssText%20%3D%20%27position%3Afixed%3Bbottom%3A24px%3Bright%3A24px%3Bwidth%3A360px%3Bz-index%3A999999%3Bbackground%3A%230B0E14%3Bcolor%3A%23D7DEE6%3Bborder%3A1px%20solid%20%23E8A33D%3Bborder-radius%3A12px%3Bpadding%3A18px%2020px%3Bfont-family%3Amonospace%3Bfont-size%3A13px%3Bbox-shadow%3A0%208px%2030px%20rgba%280%2C0%2C0%2C0.5%29%3B%27%3B%0Abox.innerHTML%20%3D%20%27%3Cdiv%20style%3D%22font-weight%3Abold%3Bcolor%3A%23E8A33D%3Bletter-spacing%3A1px%3Bmargin-bottom%3A10px%3B%22%3ENOTES%20EXPLORER%20%3C%2Fdiv%3E%3Cdiv%20id%3D%22__ne_text__%22%20style%3D%22margin-bottom%3A6px%3Bline-height%3A1.4%3B%22%3EStarting%5Cu2026%3C%2Fdiv%3E%3Cdiv%20id%3D%22__ne_eta__%22%20style%3D%22margin-bottom%3A8px%3Bfont-size%3A11px%3Bcolor%3A%235B6573%3Bmin-height%3A14px%3B%22%3E%3C%2Fdiv%3E%3Cdiv%20style%3D%22background%3A%23232E3D%3Bborder-radius%3A6px%3Bheight%3A8px%3Boverflow%3Ahidden%3B%22%3E%3Cdiv%20id%3D%22__ne_bar__%22%20style%3D%22background%3A%23E8A33D%3Bheight%3A100%25%3Bwidth%3A0%25%3Btransition%3Awidth%20.2s%3B%22%3E%3C%2Fdiv%3E%3C%2Fdiv%3E%3Cdiv%20id%3D%22__ne_close__%22%20style%3D%22margin-top%3A10px%3Btext-align%3Aright%3Bcolor%3A%235B6573%3Bcursor%3Apointer%3Bdisplay%3Anone%3B%22%3Eclose%20%5Cu2715%3C%2Fdiv%3E%27%3B%0Adocument.body.appendChild%28box%29%3B%0Areturn%20%7B%0Aupdate%28text%2C%20pct%2C%20eta%29%20%7B%0Aconst%20t%3Ddocument.getElementById%28%27__ne_text__%27%29%2C%20b%3Ddocument.getElementById%28%27__ne_bar__%27%29%2C%20e%3Ddocument.getElementById%28%27__ne_eta__%27%29%3B%0Aif%28t%29%20t.textContent%3Dtext%3B%0Aif%28b%20%26%26%20typeof%20pct%3D%3D%3D%27number%27%29%20b.style.width%3DMath.max%280%2CMath.min%28100%2Cpct%29%29%2B%27%25%27%3B%0Aif%28e%29%20e.textContent%3Deta%7C%7C%27%27%3B%0A%7D%2C%0Adone%28text%29%20%20%7B%20this.update%28text%2C100%29%3B%20const%20c%3Ddocument.getElementById%28%27__ne_close__%27%29%3B%20if%28c%29%7Bc.style.display%3D%27block%27%3Bc.onclick%3D%28%29%3D%3Ebox.remove%28%29%3B%7D%20%7D%2C%0Aerror%28text%29%20%7B%20const%20t%3Ddocument.getElementById%28%27__ne_text__%27%29%3B%20if%28t%29%7Bt.textContent%3Dtext%3Bt.style.color%3D%27%23E8677A%27%3B%7D%20const%20c%3Ddocument.getElementById%28%27__ne_close__%27%29%3B%20if%28c%29%7Bc.style.display%3D%27block%27%3Bc.onclick%3D%28%29%3D%3Ebox.remove%28%29%3B%7D%20%7D%0A%7D%3B%0A%7D%0Afunction%20sleep%28ms%29%20%7B%20return%20new%20Promise%28r%3D%3EsetTimeout%28r%2Cms%29%29%3B%20%7D%0Afunction%20downloadAsJson%28data%2C%20filename%29%20%7B%0Aconst%20blob%3Dnew%20Blob%28%5BJSON.stringify%28data%29%5D%2C%7Btype%3A%27application%2Fjson%27%7D%29%3B%0Aconst%20url%3DURL.createObjectURL%28blob%29%3B%0Aconst%20a%3Ddocument.createElement%28%27a%27%29%3B%0Aa.href%3Durl%3B%20a.download%3Dfilename%3B%0Adocument.body.appendChild%28a%29%3B%20a.click%28%29%3B%20document.body.removeChild%28a%29%3B%0AURL.revokeObjectURL%28url%29%3B%0A%7D%0Afunction%20resolveAuthorId%28activityData%2C%20pageHandle%29%20%7B%0Aif%28activityData%3F.pubs%3F.length%29%20return%20activityData.pubs%5B0%5D.author_id%3B%0Aif%28activityData%3F.subscriptions%3F.length%29%7B%0Aconst%20sub%3DactivityData.subscriptions%5B0%5D%3B%0Areturn%20sub.author_id%7C%7Csub.publication%3F.author_id%7C%7Cnull%3B%0A%7D%0Aif%28activityData%3F.publication%3F.author_id%29%20return%20activityData.publication.author_id%3B%0Aif%28activityData%3F.user%3F.id%29%20return%20activityData.user.id%3B%0Aconst%20handle%3D%28pageHandle%7C%7C%27%27%29.replace%28%2F%5E%40%2F%2C%27%27%29.toLowerCase%28%29%3B%0Aconst%20users%3DArray.isArray%28activityData%3F.users%29%3FactivityData.users%3A%5B%5D%3B%0Aif%28handle%26%26users.length%29%7B%0Aconst%20u%3Dusers.find%28u%3D%3E%28u%3F.handle%7C%7Cu%3F.username%7C%7C%27%27%29.replace%28%2F%5E%40%2F%2C%27%27%29.toLowerCase%28%29%3D%3D%3Dhandle%29%3B%0Aif%28u%29%20return%20u.id%7C%7Cu.user_id%7C%7Cnull%3B%0A%7D%0Aconst%20buckets%3D%5BactivityData%3F.feedItemComments%2C%20activityData%3F.comments%5D%3B%0Afor%28const%20bucket%20of%20buckets%29%7B%0Aif%28%21Array.isArray%28bucket%29%29%20continue%3B%0Afor%28const%20item%20of%20bucket%29%7B%0Aconst%20c%3Ditem%3F.comment%7C%7Citem%3B%0Aconst%20h%3D%28c%3F.handle%7C%7Cc%3F.user%3F.handle%7C%7C%27%27%29.replace%28%2F%5E%40%2F%2C%27%27%29.toLowerCase%28%29%3B%0Aif%28handle%26%26h%3D%3D%3Dhandle%29%20return%20c.user_id%7C%7Cc.user%3F.id%7C%7Cnull%3B%0A%7D%0A%7D%0Areturn%20null%3B%0A%7D%0Afunction%20scanPageForAuthorId%28handle%29%20%7B%0Aconst%20links%3DArray.from%28document.querySelectorAll%28%27a%5Bhref%2A%3D%22%2Fprofile%2F%22%5D%27%29%29%3B%0Aif%28handle%29%7B%0Aconst%20exact%3Dnew%20RegExp%28%60%2Fprofile%2F%28%5C%5Cd%2B%29-%24%7Bhandle.replace%28%2F%5B.%2A%2B%3F%5E%24%7B%7D%28%29%7C%5B%5C%5D%5C%5C%5D%2Fg%2C%27%5C%5C%24%26%27%29%7D%28%3F%3A%5B%2F%22%3F%5D%7C%24%29%60%2C%27i%27%29%3B%0Afor%28const%20link%20of%20links%29%7Bconst%20m%3D%28link.getAttribute%28%27href%27%29%7C%7C%27%27%29.match%28exact%29%3Bif%28m%29return%20parseInt%28m%5B1%5D%2C10%29%3B%7D%0A%7D%0Afor%28const%20link%20of%20links%29%7Bconst%20m%3D%28link.getAttribute%28%27href%27%29%7C%7C%27%27%29.match%28%2F%5C%2Fprofile%5C%2F%28%5Cd%2B%29-%2F%29%3Bif%28m%29return%20parseInt%28m%5B1%5D%2C10%29%3B%7D%0Areturn%20null%3B%0A%7D%0Afunction%20trimAttachment%28att%29%20%7B%0Aif%28%21att%29%20return%20null%3B%0Aif%28att.type%3D%3D%3D%27image%27%29%20return%20%7Btype%3A%27image%27%7D%3B%0Aconst%20out%3D%7Btype%3Aatt.type%7D%3B%0Aif%28att.type%3D%3D%3D%27post%27%26%26att.post%29%7B%0Aout.post%3D%7Bid%3Aatt.post.id%2Ctitle%3Aatt.post.title%2Ccanonical_url%3Aatt.post.canonical_url%7D%3B%0Aif%28att.publication%29%20out.publication%3D%7Bauthor_id%3Aatt.publication.author_id%2Cname%3Aatt.publication.name%7D%3B%0A%7D%20else%20if%28att.type%3D%3D%3D%27comment%27%26%26att.comment%29%7B%0Aout.comment%3D%7Bid%3Aatt.comment.id%2Cuser_id%3Aatt.comment.user_id%2Cname%3Aatt.comment.name%7C%7Catt.comment.user%3F.name%7C%7Cnull%2Chandle%3Aatt.comment.handle%7C%7Catt.comment.user%3F.handle%7C%7Cnull%7D%3B%0A%7D%0Areturn%20out%3B%0A%7D%0Aasync%20function%20fetchNoteStats%28commentId%29%20%7B%0Afor%28let%20attempt%3D0%3B%20attempt%3C4%3B%20attempt%2B%2B%29%7B%0Atry%20%7B%0Aconst%20resp%3Dawait%20fetch%28%60https%3A%2F%2Fsubstack.com%2Fapi%2Fv1%2Freader%2Fcomment%2F%24%7BcommentId%7D%2Fstats%60%2C%7Bmethod%3A%27GET%27%2Cheaders%3A%7BAccept%3A%27%2A%2F%2A%27%7D%2Ccredentials%3A%27include%27%7D%29%3B%0Aif%28resp.status%3D%3D%3D200%29%7B%0Aconst%20data%3Dawait%20resp.json%28%29%3B%0Aconst%20s%3Ddata%3F.item%3F.feedItemStats%7C%7C%7B%7D%3B%0Areturn%20%7Btotal_follows%3As.total_follows%7C%7C0%2Ctotal_paid_subscriptions%3As.total_paid_subscriptions%7C%7C0%2Ctotal_free_subscriptions%3As.total_free_subscriptions%7C%7C0%2Ctotal_arr%3As.total_arr%7C%7C0%2Ctotal_clicks%3As.total_clicks%7C%7C0%2Ctotal_share_clicks%3As.total_share_clicks%7C%7C0%7D%3B%0A%7D%0Aif%28resp.status%3D%3D%3D429%29%7B%20await%20sleep%28%5B15000%2C30000%2C60000%5D%5Battempt%5D%7C%7C60000%29%3B%20continue%3B%20%7D%0Areturn%20null%3B%0A%7D%20catch%28e%29%7B%20if%28attempt%3C3%29%20await%20sleep%282000%29%3B%20else%20return%20null%3B%20%7D%0A%7D%0Areturn%20null%3B%0A%7D%0Aasync%20function%20fetchStatsPool%28items%2C%20concurrency%2C%20onProgress%2C%20onCheckpoint%29%20%7B%0Aconst%20EMPTY%3D%7Btotal_follows%3A0%2Ctotal_paid_subscriptions%3A0%2Ctotal_free_subscriptions%3A0%2Ctotal_arr%3A0%2Ctotal_clicks%3A0%2Ctotal_share_clicks%3A0%7D%3B%0Alet%20nextIdx%3D0%2C%20done%3D0%3B%0Aconst%20startTime%3DDate.now%28%29%3B%0Aasync%20function%20worker%28%29%20%7B%0Awhile%28nextIdx%20%3C%20items.length%29%7B%0Aconst%20i%3DnextIdx%2B%2B%3B%0Aitems%5Bi%5D.stats%20%3D%20%28await%20fetchNoteStats%28items%5Bi%5D.id%29%29%20%7C%7C%20EMPTY%3B%0Adone%2B%2B%3B%0Aconst%20elapsed%3D%28Date.now%28%29-startTime%29%2F1000%3B%0Aconst%20rate%3Delapsed%3E0%3Fdone%2Felapsed%3A0%3B%0Aconst%20remaining%3Ditems.length-done%3B%0Aconst%20etaSec%3Drate%3E0%3FMath.round%28remaining%2Frate%29%3Anull%3B%0Aconst%20etaStr%3DetaSec%3D%3D%3Dnull%3F%27%27%3AetaSec%3E3600%3F%60~%24%7BMath.round%28etaSec%2F3600%29%7Dh%20remaining%60%3AetaSec%3E60%3F%60~%24%7BMath.round%28etaSec%2F60%29%7Dm%20remaining%60%3A%60~%24%7BetaSec%7Ds%20remaining%60%3B%0AonProgress%28done%2C%20items.length%2C%20etaStr%29%3B%0Aif%28done%2550%3D%3D%3D0%20%26%26%20done%3Citems.length%29%20onCheckpoint%28%29%3B%0A%7D%0A%7D%0Aconst%20workers%3D%5B%5D%3B%0Afor%28let%20w%3D0%3B%20w%3CMath.min%28concurrency%2C%20items.length%29%3B%20w%2B%2B%29%7B%0Aawait%20sleep%28w%2A150%29%3B%0Aworkers.push%28worker%28%29%29%3B%0A%7D%0Aawait%20Promise.all%28workers%29%3B%0A%7D%0Aconst%20LS_KEY%3D%27__ne_partial__%27%3B%0Afunction%20savePartial%28authorId%2C%20items%29%7B%20try%7B%20localStorage.setItem%28LS_KEY%2CJSON.stringify%28%7Bauthor_id%3AauthorId%2Citems%2Csaved_at%3ADate.now%28%29%7D%29%29%3B%20%7Dcatch%28e%29%7B%7D%20%7D%0Afunction%20loadPartial%28%29%7B%20try%7B%20const%20r%3DlocalStorage.getItem%28LS_KEY%29%3B%20return%20r%3FJSON.parse%28r%29%3Anull%3B%20%7Dcatch%28e%29%7B%20return%20null%3B%20%7D%20%7D%0Afunction%20clearPartial%28%29%7B%20try%7B%20localStorage.removeItem%28LS_KEY%29%3B%20%7Dcatch%28e%29%7B%7D%20%7D%0Aasync%20function%20run%28%29%20%7B%0Aconst%20onProfilePage%3Dwindow.location.pathname.startsWith%28%27%2F%40%27%29%3B%0Aif%28window.location.hostname%21%3D%3D%27substack.com%27%7C%7C%21onProfilePage%29%7B%0Aalert%28%27This%20needs%20to%20run%20on%20your%20own%20profile%20page%3A%20substack.com%2F%40yourhandle%5Cn%5Cn1.%20Go%20to%20substack.com%2F%40yourhandle%5Cn2.%20Make%20sure%20you%5C%27re%20logged%20in%5Cn3.%20Click%20this%20bookmark%20again%20from%20there%5Cn%5CnYou%5C%27re%20currently%20on%3A%20%27%2B%28window.location.href%7C%7C%27%28local%20file%29%27%29%29%3B%0Areturn%3B%0A%7D%0Aconst%20ui%3DcreateOverlay%28%29%3B%0Atry%20%7B%0Aui.update%28%27Resolving%20your%20account%5Cu2026%27%2C2%29%3B%0Aconst%20pageHandle%3Dwindow.location.pathname.replace%28%2F%5E%5C%2F%40%2F%2C%27%27%29.split%28%27%2F%27%29%5B0%5D%7C%7C%27%27%3B%0Aconst%20activityResp%3Dawait%20fetch%28%27https%3A%2F%2Fsubstack.com%2Fapi%2Fv1%2Factivity-feed-web%3Ffilter%3Dall%27%2C%7Bmethod%3A%27GET%27%2Cheaders%3A%7BAccept%3A%27%2A%2F%2A%27%2CReferer%3Awindow.location.href%2C%27User-Agent%27%3Anavigator.userAgent%7D%2Ccredentials%3A%27include%27%7D%29%3B%0Aif%28%21activityResp.ok%29%20throw%20new%20Error%28%60Couldn%27t%20reach%20Substack%20%28status%20%24%7BactivityResp.status%7D%29.%20Are%20you%20logged%20in%3F%60%29%3B%0Aconst%20activityData%3Dawait%20activityResp.json%28%29%3B%0Alet%20authorId%3DresolveAuthorId%28activityData%2C%20pageHandle%29%3B%0Aif%28%21authorId%29%7B%20ui.update%28%27Scanning%20page%20for%20your%20ID%5Cu2026%27%2C3%29%3B%20authorId%3DscanPageForAuthorId%28pageHandle%29%3B%20%7D%0Aif%28%21authorId%29%7B%0Aconsole.log%28%27activity-feed-web%20response%3A%27%2CactivityData%29%3B%0Aconst%20manual%3Dwindow.prompt%28%27Could%20not%20auto-detect%20your%20ID.%5CnFind%20it%20in%20a%20note%20URL%3A%20substack.com%2Fprofile%2F123456-name%2Fnote%2F...%5Cn%5CnEnter%20numeric%20ID%3A%27%29%3B%0Aif%28%21manual%7C%7C%21%2F%5E%5Cd%2B%24%2F.test%28manual.trim%28%29%29%29%7Bui.error%28%27Cancelled.%27%29%3B%20return%3B%7D%0AauthorId%3DparseInt%28manual.trim%28%29%2C10%29%3B%0A%7D%0Aconst%20partial%3DloadPartial%28%29%3B%0Alet%20cachedStats%3D%7B%7D%3B%0Aif%28partial%26%26partial.author_id%3D%3D%3DauthorId%29%7B%0Aconst%20fetched%3Dpartial.items.filter%28it%3D%3Eit.stats%21%3D%3Dnull%29.length%3B%0Aif%28fetched%3E0%29%7B%0Aconst%20ageMin%3DMath.round%28%28Date.now%28%29-%28partial.saved_at%7C%7C0%29%29%2F60000%29%3B%0Aconst%20resume%3Dconfirm%28%60Found%20partial%20export%20from%20%24%7BageMin%7D%20min%20ago%20%28%24%7Bfetched%7D%20stats%20already%20fetched%29.%5Cn%5CnResume%3F%20OK%20%3D%20resume%2C%20Cancel%20%3D%20start%20fresh%60%29%3B%0Aif%28resume%29%7B%20partial.items.forEach%28it%3D%3E%7Bif%28it.stats%21%3D%3Dnull%29cachedStats%5Bit.id%5D%3Dit.stats%3B%7D%29%3B%20%7D%0Aelse%20clearPartial%28%29%3B%0A%7D%0A%7D%0Alet%20allItems%3D%5B%5D%2C%20cursor%3Dnull%2C%20page%3D0%2C%20_pubCapture%3Dnull%3B%0Ado%20%7B%0Apage%2B%2B%3B%0Aui.update%28%60Fetching%20notes%5Cu2026%20%28page%20%24%7Bpage%7D%2C%20%24%7BallItems.length%7D%20so%20far%29%60%2CMath.round%285%2B23%2A%281-Math.exp%28-page%2F15%29%29%29%29%3B%0Alet%20url%3D%60https%3A%2F%2Fsubstack.com%2Fapi%2Fv1%2Freader%2Ffeed%2Fprofile%2F%24%7BauthorId%7D%60%3B%0Aif%28cursor%29%20url%2B%3D%60%3Fcursor%3D%24%7Bcursor%7D%60%3B%0Aconst%20resp%3Dawait%20fetch%28url%2C%7Bmethod%3A%27GET%27%2Cheaders%3A%7BAccept%3A%27%2A%2F%2A%27%2CReferer%3Awindow.location.href%2C%27User-Agent%27%3Anavigator.userAgent%7D%2Ccredentials%3A%27include%27%7D%29%3B%0Aif%28%21resp.ok%29%20throw%20new%20Error%28%60Feed%20request%20failed%20%28status%20%24%7Bresp.status%7D%29.%20Account%20ID%20may%20be%20wrong.%60%29%3B%0Aconst%20data%3Dawait%20resp.json%28%29%3B%0Aif%28Array.isArray%28data.items%29%29%7B%0Aconst%20items%3Ddata.items.filter%28item%3D%3Eitem.type%3D%3D%3D%27comment%27%26%26item.comment%29.map%28item%3D%3E%7B%0Aconst%20c%3Ditem.comment%3B%0Aif%28%21_pubCapture%26%26String%28c.user_id%29%3D%3D%3DString%28authorId%29%26%26c.user_primary_publication%29%20_pubCapture%3Dc.user_primary_publication%3B%0Areturn%20%7Bid%3Ac.id%2Cbody%3Ac.body%2Cuser_id%3Ac.user_id%2Cname%3Ac.name%7C%7Cc.user%3F.name%7C%7Cnull%2Chandle%3Ac.handle%7C%7Cc.user%3F.handle%7C%7Cnull%2Creactions%3Ac.reactions%3FObject.values%28c.reactions%29.reduce%28%28a%2Cb%29%3D%3Ea%2Bb%2C0%29%3A0%2Crestacks%3Ac.restacks%7C%7C0%2Cchildren_count%3Ac.children_count%3F%3Fc.comment_count%3F%3Fc.reply_count%3F%3Fnull%2Cattachments%3A%28c.attachments%7C%7C%5B%5D%29.map%28trimAttachment%29%2Cpublished_at%3Ac.date%2Cstats%3Anull%7D%3B%0A%7D%29%3B%0AallItems%3DallItems.concat%28items%29%3B%0A%7D%0Acursor%3Ddata.nextCursor%3B%0Aif%28cursor%29%20await%20sleep%28300%29%3B%0A%7D%20while%28cursor%29%3B%0Aconst%20ownItems%3DallItems.filter%28n%3D%3EString%28n.user_id%29%3D%3D%3DString%28authorId%29%29%3B%0Aconst%20otherItems%3DallItems.filter%28n%3D%3EString%28n.user_id%29%21%3D%3DString%28authorId%29%29%3B%0Aconst%20needStats%3DownItems.filter%28it%3D%3E%7B%20if%28cachedStats%5Bit.id%5D%29%7Bit.stats%3DcachedStats%5Bit.id%5D%3Breturn%20false%3B%7D%20return%20true%3B%20%7D%29%3B%0Aconst%20alreadyDone%3DownItems.length-needStats.length%3B%0Aif%28needStats.length%3E0%29%7B%0Aui.update%28%60Fetching%20stats%20for%20%24%7BneedStats.length%7D%20notes%20%286%20parallel%29%5Cu2026%60%2C30%29%3B%0Aawait%20fetchStatsPool%28%0AneedStats%2C%206%2C%0A%28done%2C%20n%2C%20eta%29%3D%3E%7B%0Aconst%20overall%3DalreadyDone%2Bdone%3B%0Aconst%20pct%3D30%2BMath.round%28%28overall%2FMath.max%28ownItems.length%2C1%29%29%2A68%29%3B%0Aui.update%28%60Stats%3A%20%24%7Boverall%7D%2F%24%7BownItems.length%7D%60%2Cpct%2Ceta%29%3B%0A%7D%2C%0A%28%29%3D%3EsavePartial%28authorId%2C%20allItems%29%20%20%20%2F%2F%20checkpoint%3A%20allItems%20already%20has%20.stats%20written%20in-place%0A%29%3B%0A%7D%0Aconst%20EMPTY%3D%7Btotal_follows%3A0%2Ctotal_paid_subscriptions%3A0%2Ctotal_free_subscriptions%3A0%2Ctotal_arr%3A0%2Ctotal_clicks%3A0%2Ctotal_share_clicks%3A0%7D%3B%0A%2F%2F%20restack%20items%20keep%20stats%3Anull%20%E2%80%94%20dashboard%20treats%20null%20as%20zero%0Aui.update%28%27Done%20%5Cu2014%20preparing%20download%5Cu2026%27%2C99%29%3B%0AclearPartial%28%29%3B%0Aconst%20ordered%3D%5B...ownItems%2C...otherItems%5D.sort%28%28a%2Cb%29%3D%3Enew%20Date%28b.published_at%29-new%20Date%28a.published_at%29%29%3B%0Aconst%20_ownStr%3DString%28authorId%29%3B%0Aconst%20_slimItems%3Dordered.map%28it%3D%3E%7B%0A%20%20if%28String%28it.user_id%29%21%3D%3D_ownStr%29%7B%0A%20%20%20%20%2F%2F%20restack%3A%20drop%20stats%20%28null%2Fempty%29%20to%20save%20space%0A%20%20%20%20const%20o%3DObject.assign%28%7B%7D%2Cit%29%3B%0A%20%20%20%20delete%20o.stats%3B%0A%20%20%20%20return%20o%3B%0A%20%20%7D%0A%20%20const%20o%3DObject.assign%28%7B%7D%2Cit%29%3B%0A%20%20delete%20o.user_id%3B%20delete%20o.name%3B%20delete%20o.handle%3B%0A%20%20return%20o%3B%0A%7D%29%3B%0Alet%20_slimPub%3Dundefined%3B%0Aif%28_pubCapture%29%7B%0A%20%20_slimPub%3D%7B%0A%20%20%20%20id%3A_pubCapture.id%2C%0A%20%20%20%20subdomain%3A_pubCapture.subdomain%2C%0A%20%20%20%20name%3A_pubCapture.name%2C%0A%20%20%20%20logo_url%3A_pubCapture.logo_url%7C%7Cnull%2C%0A%20%20%20%20payments_state%3A_pubCapture.payments_state%7C%7Cnull%0A%20%20%7D%3B%0A%7D%0AdownloadAsJson%28%7B%0A%20%20author_id%3AauthorId%2C%0A%20%20author_name%3A_pubCapture%3F%28_pubCapture.name%7C%7Cnull%29%3Anull%2C%0A%20%20author_handle%3ApageHandle%7C%7Cnull%2C%0A%20%20publication%3A_slimPub%2C%0A%20%20items%3A_slimItems%0A%7D%2C%60%24%7BpageHandle%3FpageHandle%2B%27_%27%3A%27%27%7Dsubstack_notes_export_%24%7Bnew%20Date%28%29.toISOString%28%29.slice%280%2C16%29.replace%28%27T%27%2C%27_%27%29.replace%28%27%3A%27%2C%27-%27%29%7D.json%60%29%3B%0Aui.done%28%60%5Cu2705%20Done%21%20%24%7Bordered.length%7D%20notes%20%28%24%7BownItems.length%7D%20yours%20%2B%20%24%7BotherItems.length%7D%20restacks%29.%20Drop%20the%20file%20into%20the%20dashboard.%60%29%3B%0A%7D%20catch%28err%29%7B%0Aconsole.error%28err%29%3B%0Aui.error%28%27%5Cu274C%20%27%2B%28err%3F.message%7C%7C%27Something%20went%20wrong%20%5Cu2014%20see%20console%20for%20details.%27%29%29%3B%0A%7D%0A%7D%0Arun%28%29%3B%0A%7D%29%28%29%3B"
             title="Drag me to your bookmarks bar — Notes Export">📥 Notes Export</a>
           <span id="clickWarning" style="display:none;margin-left:10px;font-size:12px;color:var(--rose);">Drag it to bookmarks bar — see Method A above.</span>
         </div>
@@ -306,7 +293,7 @@
     <div class="section">
       <div class="section-label">CLUSTER MAP — every note, in order, hover for detail</div>
       <div class="panel">
-        <div class="map-grid" id="mapGrid"></div>
+        <canvas id="mapCanvas" style="width:100%;display:block;cursor:pointer;"></canvas>
         <div class="legend" id="mapLegend">
           <div class="legend-item" data-filter-type="Original Note"><span class="swatch" style="background:#E8A33D"></span>Original Note</div>
           <div class="legend-item" data-filter-type="Own Post Promo"><span class="swatch" style="background:#C9701E"></span>Own Post Promo</div>
@@ -315,7 +302,7 @@
           <div class="legend-item" data-filter-type="converted"><span class="swatch" style="background:#5FBF73"></span>Converted a subscriber</div>
           <div class="legend-item" data-filter-type="top10"><span class="swatch" style="background:#E8A33D;box-shadow:0 0 0 2px rgba(255,255,255,0.5) inset;border-radius:3px"></span>Top 10% note</div>
         </div>
-        <div class="caption" id="mapCaption"></div>
+        <div class="caption" id="mapCaption"><span id="mapCounter" style="color:var(--dim);font-family:'DejaVu Sans Mono',monospace;font-size:12px;"></span></div>
       </div>
     </div>
 
@@ -386,7 +373,7 @@
     </div>
 
     <footer>
-      <div id="footerSource">SOURCE: NOTES EXPORT · PROCESSED ENTIRELY IN-BROWSER · Notes Explorer v1.0 by <a href="https://github.com/zedcade/substack-notes-explorer" target="_blank" class="pub-link">zedcade</a></div>
+      <div id="footerSource">SOURCE: NOTES EXPORT · PROCESSED ENTIRELY IN-BROWSER · Notes Explorer v1.1 by <a href="https://github.com/zedcade/substack-notes-explorer" target="_blank" class="pub-link">zedcade</a></div>
       <div id="footerDate"></div>
     </footer>
 
@@ -397,7 +384,7 @@
 <div id="netTooltip"></div>
 
 <script>
-function classifyNotes(rawItems, authorId) {
+function classifyNotes(rawItems, authorId, _authorName, _authorHandle) {
   const seen = new Set();
   const deduped = [];
   for (const item of rawItems) {
@@ -406,20 +393,20 @@ function classifyNotes(rawItems, authorId) {
     deduped.push(item);
   }
   return deduped.map((item) => {
-    const likes = item.reactions ? Object.values(item.reactions).reduce((a,b)=>a+b,0) : 0;
+    const likes = typeof item.reactions === 'number' ? item.reactions : (item.reactions ? Object.values(item.reactions).reduce((a,b)=>a+b,0) : 0);
     const stats = item.stats || {};
     const clicks = stats.total_clicks || 0;
     const free_subs = stats.total_free_subscriptions || 0;
     const paid_subs = stats.total_paid_subscriptions || 0;
     const follows = stats.total_follows || 0;
-    const is_own = item.user_id === authorId;
+    const is_own = item.user_id === authorId || (item.user_id === undefined && _authorHandle !== null);
     const atts = item.attachments || [];
     const attTypes = new Set(atts.map(a=>a.type));
     const has_post_att = attTypes.has('post');
     let self_restack = false;
     if (has_post_att) {
       for (const a of atts) {
-        if (a.type==='post' && a.publication && a.publication.author_id===item.user_id) self_restack = true;
+        if (a.type==='post' && a.publication && a.publication.author_id===(item.user_id||authorId)) self_restack = true;
       }
     }
     let quoted_note_author = null, quoted_note_author_id = null;
@@ -435,7 +422,7 @@ function classifyNotes(rawItems, authorId) {
     return {
       id:item.id, date:item.published_at, ts:dateObj.getTime(), is_own, type,
       author: is_own ? 'You' : (item.name||'Unknown'),
-      author_handle: item.handle||null,
+      author_handle: item.handle || (is_own ? _authorHandle : null) || null,
       body: item.body||'', likes, restacks: item.restacks||0, comments: item.children_count||0,
       clicks, free_subs, paid_subs, follows, arr: stats.total_arr||0, converted, quoted_note_author, quoted_note_author_id,
       link: `https://substack.com/note/c-${item.id}`
@@ -586,7 +573,11 @@ function hexAlpha(h,a){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5)
     }
   })();
 
+  // Attempt IDB auto-load after handle is resolved (100ms gives browser time to paint)
+  setTimeout(idbAutoLoad, 100);
+
   // Save on input change (if checkbox ticked) + update checkbox visibility
+  handleInput.addEventListener('blur', () => { if (!DATA || !DATA.length) setTimeout(idbAutoLoad,0); });
   handleInput.addEventListener('input', () => {
     updateProfileLink();
     syncHandleSave();
@@ -680,32 +671,52 @@ function loadFile(file){
 
     if (!authorId) { showError("This export is missing an author_id — try re-running the bookmarklet."); return; }
 
-    DATA = classifyNotes(items, authorId);
-    if (DATA.length === 0) { showError('No notes found in this export.'); return; }
-    AUTHOR_ID = authorId;
-    NOW_TS = Math.max(...DATA.map(d=>d.ts));
-    const _fo = items.find(it => String(it.user_id) === String(authorId));
-    const _pub = json.publication || (_fo && _fo.user_primary_publication ? _fo.user_primary_publication : null);
-    PUB_NAME      = (_pub ? _pub.name      : null) || PUB_NAME || null;
-    PUB_SUBDOMAIN = (_pub ? _pub.subdomain : null) || PUB_SUBDOMAIN || null;
-    const _newLogo = (_pub ? (_pub.logo_url || _pub.cover_photo_url || null) : null) || null;
-    const _hIn = document.getElementById('handleInput');
-    // Determine the handle from this export
-    const _exportHandle = (_fo ? (_fo.handle || '') : '').replace(/^@/,'').toLowerCase();
-    const _currentHandle = (_hIn ? _hIn.value.trim().replace(/^@/,'') : '').toLowerCase();
-    // Update logo: keep existing if same handle, update if new logo, clear if handle changed
-    if (_newLogo) {
-      PUB_LOGO = _newLogo;
-    } else if (_exportHandle && _currentHandle && _exportHandle !== _currentHandle) {
-      PUB_LOGO = null; // different account — clear stale logo
-    }
-    // If handle input is empty, fill from export
-    if (_hIn && !_hIn.value.trim() && _exportHandle) {
-      _hIn.value = _exportHandle;
-    }
-    buildIndex();
-    buildNetwork();
-    initDashboard();
+    // Show loading state immediately, then process off the paint frame
+    const _loadingDiv = document.createElement('div');
+    _loadingDiv.id = 'neLoadingOverlay';
+    _loadingDiv.style.cssText = 'position:fixed;inset:0;background:rgba(11,14,20,0.82);display:flex;align-items:center;justify-content:center;z-index:9000;font-family:monospace;font-size:15px;color:#E8A33D;letter-spacing:1px;';
+    _loadingDiv.textContent = 'Processing ' + json.items.length.toLocaleString('en-US') + ' notes…';
+    document.body.appendChild(_loadingDiv);
+
+    setTimeout(() => {
+      try {
+        DATA = classifyNotes(items, authorId, json.author_name||null, json.author_handle||null);
+        if (DATA.length === 0) { document.body.removeChild(_loadingDiv); showError('No notes found in this export.'); return; }
+        AUTHOR_ID = authorId;
+        NOW_TS = Math.max(...DATA.map(d=>d.ts));
+        const _fo = items.find(it => String(it.user_id) === String(authorId));
+        const _pub = json.publication || (_fo && _fo.user_primary_publication ? _fo.user_primary_publication : null);
+        PUB_NAME      = (_pub ? _pub.name      : null) || PUB_NAME || null;
+        PUB_SUBDOMAIN = (_pub ? _pub.subdomain : null) || PUB_SUBDOMAIN || null;
+        const _newLogo = (_pub ? (_pub.logo_url || _pub.cover_photo_url || null) : null) || null;
+        const _hIn = document.getElementById('handleInput');
+        const _exportHandle = (_fo ? (_fo.handle || '') : (json.author_handle||'')).replace(/^@/,'').toLowerCase();
+        const _currentHandle = (_hIn ? _hIn.value.trim().replace(/^@/,'') : '').toLowerCase();
+        if (_newLogo) { PUB_LOGO = _newLogo; }
+        else if (_exportHandle && _currentHandle && _exportHandle !== _currentHandle) { PUB_LOGO = null; }
+        if (_hIn && !_hIn.value.trim() && _exportHandle) { _hIn.value = _exportHandle; }
+
+        _loadingDiv.textContent = 'Building index…';
+        setTimeout(() => {
+          buildIndex();
+          buildNetwork();
+          document.body.removeChild(_loadingDiv);
+          // Persist to IndexedDB then render
+          idbMergeExport(authorId, _exportHandle || null, json, DATA).then(async () => {
+            if (_exportHandle) idbSetLastHandle(_exportHandle);
+            initDashboard();
+            const allM = await idbAllMeta();
+            idbRenderHandleDropdown(allM, _exportHandle || null);
+          }).catch(() => {
+            // IDB unavailable (e.g. file:// in some browsers) — render anyway
+            initDashboard();
+          });
+        }, 0);
+      } catch(err) {
+        if (document.body.contains(_loadingDiv)) document.body.removeChild(_loadingDiv);
+        showError('Processing failed: ' + (err.message || err));
+      }
+    }, 0);
   };
   reader.readAsText(file);
 }
@@ -714,7 +725,7 @@ document.getElementById('reloadLink').addEventListener('click', ()=>{
   document.getElementById('dashboardView').style.display = 'none';
   document.getElementById('setupView').style.display = 'block';
   const _eb = document.getElementById('errBox'); if (_eb) { _eb.textContent=''; _eb.style.display='none'; }
-
+  const _dd = document.getElementById('idbHandleDropdown'); if (_dd) _dd.remove();
 });
 
 function buildNetwork(){
@@ -775,7 +786,7 @@ function renderNetwork(){
   if (canvas.__layout && canvas.__layout.length > 0) {
     top = canvas.__layout;
   } else {
-    top = NETWORK.slice(0, 40).map(n=>Object.assign({}, n));
+    top = NETWORK.slice(0, 60).map(n=>Object.assign({}, n));
     layoutBubbles(top, W-24, H-24);
     top.forEach(n=>{n.x+=12;n.y+=12;});
     canvas.__layout = top;
@@ -1033,12 +1044,15 @@ function initDashboard(){
 
   buildMap();
   // Legend click-to-filter
-  document.getElementById('mapLegend').addEventListener('click', e=>{
+  const _legendEl = document.getElementById('mapLegend');
+  const _legendClone = _legendEl.cloneNode(true);
+  _legendEl.parentNode.replaceChild(_legendClone, _legendEl);
+  _legendClone.addEventListener('click', e=>{
     const item = e.target.closest('[data-filter-type]');
     if (!item) return;
     const t = item.getAttribute('data-filter-type');
     legendTypeFilter = (legendTypeFilter===t) ? null : t;
-    document.querySelectorAll('#mapLegend .legend-item').forEach(el=>{
+    _legendClone.querySelectorAll('.legend-item').forEach(el=>{
       const active = el.getAttribute('data-filter-type')===legendTypeFilter;
       el.style.opacity = (!legendTypeFilter||active) ? '1' : '0.35';
       el.style.fontWeight = active ? 'bold' : '';
@@ -1220,110 +1234,229 @@ function renderKPIs(scoped){
 }
 
 
-function buildMap(){
-  const grid = document.getElementById('mapGrid');
-  const sorted = INDEX ? [...INDEX.allSorted].reverse() : [...DATA].sort((a,b)=>a.ts-b.ts);
-  const total = sorted.length;
-  const cols = Math.max(20, Math.round(Math.sqrt(total*2.3)));
-  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-  const rows = Math.ceil(total/cols);
-  const cellCount = rows*cols;
+// ── Canvas cluster map ───────────────────────────────────────────────────
+const MAP_COLORS = {
+  original: '#E8A33D', promo: '#C9701E', curated: '#F0E080',
+  restack: '#4FD1C5', converted: '#5FBF73'
+};
+const MAP_DIM_ALPHA = 0.10;
+let _mapSorted = [];
+let _mapTop10  = new Set();
+let _mapCanvas = null;
+let _mapTooltip = null;
+let _mapLastRangeSet = null;
+let _mapLastScopeSet = null;
 
-  // Score for top-10%: weighted composite of all engagement signals
-  // clicks and subs carry the most weight (they represent real conversion)
+function buildMap() {
+  _mapCanvas = document.getElementById('mapCanvas');
+  if (!_mapCanvas) return;
+  _mapTooltip = document.getElementById('tooltip');
+
+  const sorted = INDEX ? [...INDEX.allSorted].reverse() : [...DATA].sort((a,b)=>a.ts-b.ts);
+  _mapSorted = sorted;
+
+  // Score top-10%
   function noteScore(d){
     return (d.likes||0)*2 + (d.restacks||0)*3 + (d.comments||0)*2
          + (d.clicks||0)*4 + ((d.free_subs||0)+(d.paid_subs||0))*10;
   }
   const ownOnly   = sorted.filter(d=>d.is_own);
   const ownScored = [...ownOnly].sort((a,b)=>noteScore(b)-noteScore(a));
-  // Only count notes with score > 0 in the pool (exclude zero-engagement notes from top%)
   const scoredPool = ownScored.filter(d=>noteScore(d)>0);
   const top10Cut   = Math.max(1, Math.ceil(scoredPool.length*0.1));
-  const top10Set   = new Set(scoredPool.slice(0,top10Cut).map(d=>d.id));
-  // Store in INDEX so updateMapDimming can use it
-  if(INDEX) INDEX.top10Set = top10Set;
+  _mapTop10 = new Set(scoredPool.slice(0,top10Cut).map(d=>d.id));
+  if (INDEX) INDEX.top10Set = _mapTop10;
 
-  // Build HTML in one string — no per-cell listeners
-  let h='';
-  for(let i=0;i<cellCount;i++){
-    if(i<total){
-      const d=sorted[i];
-      const isTop10 = top10Set.has(d.id);
-      const slug    = d.converted?'converted':(TYPESLUG[d.type]||'original');
-      h+=`<div class="cell${isTop10?' top10':''}" data-id="${d.id}" data-type="${slug}" data-converted="${d.converted?'1':'0'}" data-top10="${isTop10?'1':'0'}"></div>`;
+  // Size canvas — MAP_BUF gives edge cells room to zoom without clipping
+  const MAP_BUF = 8;
+  const W = _mapCanvas.parentElement.clientWidth - 56 || 1000;
+  const total = sorted.length;
+  const cols = Math.max(20, Math.round(Math.sqrt(total * 2.3)));
+  const CW   = Math.max(4, Math.floor((W - cols*2) / cols));
+  const CH   = Math.max(4, Math.round(CW * 0.85));
+  const rows = Math.ceil(total / cols);
+  _mapCanvas.width  = cols * (CW + 2) + MAP_BUF * 2;
+  _mapCanvas.height = rows * (CH + 2) + MAP_BUF * 2;
+  _mapCanvas.style.height = _mapCanvas.height + 'px';
+  _mapCanvas._cols = cols; _mapCanvas._CW = CW; _mapCanvas._CH = CH; _mapCanvas._BUF = MAP_BUF;
+
+  drawMapCanvas(null, null); // draw all full-opacity initially
+
+  // Delegated events (single listeners)
+  _mapCanvas._sortedRef = sorted;
+  _mapCanvas.onmousemove = _onMapMove;
+  _mapCanvas.onmouseleave = _onMapLeave;
+  _mapCanvas.onclick = _onMapClick;
+}
+
+function _mapCellAt(mx, my) {
+  if (!_mapCanvas) return null;
+  const {_cols, _CW, _CH, _BUF} = _mapCanvas;
+  const _b = _BUF || 0;
+  const col = Math.floor((mx - _b) / (_CW + 2));
+  const row = Math.floor((my - _b) / (_CH + 2));
+  if (col < 0 || col >= _cols || row < 0) return null;
+  const idx = row * _cols + col;
+  if (idx >= 0 && idx < _mapSorted.length) return _mapSorted[idx];
+  return null;
+}
+
+function _onMapMove(e) {
+  const rect = _mapCanvas.getBoundingClientRect();
+  const scaleX = _mapCanvas.width / rect.width;
+  const scaleY = _mapCanvas.height / rect.height;
+  const mx = (e.clientX - rect.left) * scaleX;
+  const my = (e.clientY - rect.top)  * scaleY;
+  const d  = _mapCellAt(mx, my);
+
+  // Update hover index and redraw if changed
+  const {_cols, _CW, _CH, _BUF} = _mapCanvas;
+  const _hb = _BUF || 0;
+  const col = Math.floor((mx - _hb) / (_CW + 2));
+  const row = Math.floor((my - _hb) / (_CH + 2));
+  const newIdx = row * _cols + col;
+  const validIdx = d ? newIdx : -1;
+  if (validIdx !== _mapHoverIdx) {
+    _mapHoverIdx = validIdx;
+    // Lightweight redraw using last cached filter sets
+    drawMapCanvas(_mapLastRangeSet, _mapLastScopeSet);
+  }
+
+  if (!d) { _mapTooltip.style.display='none'; return; }
+  const authorClass = d.is_own ? 'mine' : '';
+  const preview = d.body && d.body.length>220 ? d.body.slice(0,220)+'…' : (d.body||'(no text — media only)');
+  _mapTooltip.innerHTML = `<div class="tt-meta">${d.date.slice(0,10)} <span class="tt-author ${authorClass}">${d.is_own?'You':d.author}</span> ${d.type}</div><div class="tt-body">${preview.replace(/</g,'&lt;')}</div><div class="tt-stats"><span>♥ ${d.likes}</span><span>↻ ${d.restacks}</span><span>💬 ${d.comments}</span>${d.clicks?`<span>👁 ${d.clicks}</span>`:''}</div>${d.converted?`<div class="tt-conv">${d.free_subs+d.paid_subs} subscriber${d.free_subs+d.paid_subs>1?'s':''}</div>`:''}<a class="tt-link" href="${d.link}" target="_blank">${d.link}</a>`;
+  const tw=340, pad=16;
+  let x=e.clientX+pad, y=e.clientY+pad;
+  if (x+tw>window.innerWidth) x=e.clientX-tw-pad;
+  _mapTooltip.style.left=x+'px'; _mapTooltip.style.top=y+'px'; _mapTooltip.style.display='block';
+}
+function _onMapLeave() {
+  _mapTooltip.style.display='none';
+  if (_mapHoverIdx !== -1) {
+    _mapHoverIdx = -1;
+    drawMapCanvas(_mapLastRangeSet, _mapLastScopeSet);
+  }
+}
+function _onMapClick(e) {
+  const rect = _mapCanvas.getBoundingClientRect();
+  const scaleX = _mapCanvas.width / rect.width;
+  const scaleY = _mapCanvas.height / rect.height;
+  const d = _mapCellAt((e.clientX-rect.left)*scaleX, (e.clientY-rect.top)*scaleY);
+  if (d) window.open(d.link,'_blank');
+}
+
+// Track hovered cell index for enlarge effect
+let _mapHoverIdx = -1;
+
+function _drawCell(ctx, x, y, w, h, color, alpha, isTop10, isHover) {
+  const r = 2; // uniform 2px radius for all cells
+  const scale = isHover ? 1.35 : 1.0;
+  let dx = x, dy = y, dw = w, dh = h;
+  if (isHover) {
+    const ex = (w * (scale - 1)) / 2;
+    const ey = (h * (scale - 1)) / 2;
+    dx = x - ex; dy = y - ey; dw = w * scale; dh = h * scale;
+  }
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = color;
+  // Rounded rect (roundRect available in modern browsers, fallback manual)
+  if (ctx.roundRect) {
+    ctx.beginPath();
+    ctx.roundRect(dx, dy, dw, dh, r);
+    ctx.fill();
+  } else {
+    ctx.beginPath();
+    ctx.moveTo(dx + r, dy);
+    ctx.lineTo(dx + dw - r, dy);
+    ctx.arcTo(dx + dw, dy, dx + dw, dy + r, r);
+    ctx.lineTo(dx + dw, dy + dh - r);
+    ctx.arcTo(dx + dw, dy + dh, dx + dw - r, dy + dh, r);
+    ctx.lineTo(dx + r, dy + dh);
+    ctx.arcTo(dx, dy + dh, dx, dy + dh - r, r);
+    ctx.lineTo(dx, dy + r);
+    ctx.arcTo(dx, dy, dx + r, dy, r);
+    ctx.closePath();
+    ctx.fill();
+  }
+  if (isTop10 && alpha > 0.5) {
+    // inset ring
+    ctx.globalAlpha = Math.min(alpha, 0.55);
+    ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+    ctx.lineWidth = isHover ? 2 : 1.5;
+    if (ctx.roundRect) {
+      ctx.beginPath(); ctx.roundRect(dx+1, dy+1, dw-2, dh-2, Math.max(1,r-1)); ctx.stroke();
     } else {
-      h+='<div class="cell empty"></div>';
+      ctx.strokeRect(dx+1, dy+1, dw-2, dh-2);
+    }
+    // white dot top-right
+    ctx.globalAlpha = isHover ? 1 : 0.9;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(dx+dw-2.5, dy+2.5, isHover ? 2 : 1.5, 0, Math.PI*2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+}
+
+function drawMapCanvas(inRangeSet, inScopeSet) {
+  if (!_mapCanvas) return;
+  // Cache for hover redraws
+  _mapLastRangeSet = inRangeSet;
+  _mapLastScopeSet = inScopeSet;
+  const ctx  = _mapCanvas.getContext('2d');
+  const {_cols, _CW, _CH} = _mapCanvas;
+  const W = _mapCanvas.width, H = _mapCanvas.height;
+  ctx.clearRect(0, 0, W, H);
+  const total = _mapSorted.length;
+
+  // Draw non-hovered cells first, hovered cell last (so it renders on top)
+  for (let pass = 0; pass < 2; pass++) {
+    for (let i = 0; i < total; i++) {
+      const isHover = (i === _mapHoverIdx);
+      if (pass === 0 && isHover) continue;  // skip hovered on first pass
+      if (pass === 1 && !isHover) continue; // only hovered on second pass
+
+      const d   = _mapSorted[i];
+      const col = i % _cols;
+      const row = Math.floor(i / _cols);
+      const _buf = _mapCanvas._BUF || 0;
+      const x   = _buf + col * (_CW + 2);
+      const y   = _buf + row * (_CH + 2);
+      const slug = d.converted ? 'converted' : (TYPESLUG[d.type] || 'original');
+      const baseColor = MAP_COLORS[slug] || '#E8A33D';
+
+      const inRange  = !inRangeSet  || inRangeSet.has(d.id);
+      const inScope  = !inScopeSet  || inScopeSet.has(d.id);
+      const inLegend = !legendTypeFilter ||
+        (legendTypeFilter==='converted' ? !!d.converted :
+         legendTypeFilter==='top10' ? _mapTop10.has(d.id) :
+         d.type===legendTypeFilter);
+
+      const dim   = !(inRange && inScope && inLegend);
+      const alpha = dim ? MAP_DIM_ALPHA : 1.0;
+      _drawCell(ctx, x, y, _CW, _CH, baseColor, alpha, _mapTop10.has(d.id), isHover);
     }
   }
-  grid.innerHTML = h;
-
-  // Cache cell refs in INDEX.cellMap — O(1) lookup in updateMapDimming
-  if(INDEX){
-    INDEX.cellMap.clear();
-    requestAnimationFrame(()=>{
-      requestAnimationFrame(()=>{
-        grid.querySelectorAll('.cell[data-id]').forEach(cell=>{
-          INDEX.cellMap.set(parseInt(cell.dataset.id), cell);
-        });
-      });
-    });
-  }
-
-  // ── Single delegated tooltip (replaces 3×N listeners) ──────────────────
-  const tooltip = document.getElementById('tooltip');
-  const byId    = INDEX ? INDEX.byId : (() => { const m=new Map(); DATA.forEach(d=>m.set(d.id,d)); return m; })();
-
-  grid.addEventListener('mousemove', e=>{
-    const cell=e.target.closest('.cell[data-id]');
-    if(!cell){ tooltip.style.display='none'; return; }
-    const d=byId.get(parseInt(cell.dataset.id));
-    if(!d){ tooltip.style.display='none'; return; }
-    const authorClass=d.is_own?'mine':'';
-    const preview=d.body&&d.body.length>220?d.body.slice(0,220)+'…':(d.body||'(no text — media only)');
-    tooltip.innerHTML=`<div class="tt-meta">${d.date.slice(0,10)} <span class="tt-author ${authorClass}">${d.is_own?'You':d.author}</span> ${d.type}</div><div class="tt-body">${preview.replace(/</g,'&lt;')}</div><div class="tt-stats"><span>♥ ${d.likes}</span><span>↻ ${d.restacks}</span><span>\uD83D\uDCAC ${d.comments}</span>${d.clicks?`<span>\uD83D\uDC41 ${d.clicks}</span>`:''}</div>${d.converted?`<div class="tt-conv">${d.free_subs+d.paid_subs} subscriber${d.free_subs+d.paid_subs>1?'s':''}</div>`:''}<a class="tt-link" href="${d.link}" target="_blank">${d.link}</a>`;
-    const tw=340, pad=16;
-    let x=e.clientX+pad, y=e.clientY+pad;
-    if(x+tw>window.innerWidth) x=e.clientX-tw-pad;
-    tooltip.style.left=x+'px'; tooltip.style.top=y+'px'; tooltip.style.display='block';
-  });
-  grid.addEventListener('mouseleave', ()=>{ tooltip.style.display='none'; });
-  grid.addEventListener('click', e=>{
-    const cell=e.target.closest('.cell[data-id]');
-    if(cell){ const d=byId.get(parseInt(cell.dataset.id)); if(d) window.open(d.link,'_blank'); }
-  });
 }
-function updateMapDimming(filtered){
-  if(!INDEX) return;
-  if(INDEX.cellMap.size===0){
-    const grid=document.getElementById('mapGrid');
-    if(grid) grid.querySelectorAll('.cell[data-id]').forEach(cell=>{
-      INDEX.cellMap.set(parseInt(cell.dataset.id), cell);
-    });
-    if(INDEX.cellMap.size===0) return;
-  }
-  const idsInRange = new Set(filtered.map(d=>d.id));
-  const ownCount   = INDEX.ownNotes.length;
-  const scoped     = applyScope(filtered);
-  const scopeIds   = new Set(scoped.map(d=>d.id));
-  const own        = scoped.filter(d=>d.is_own).length;
-  const oth        = scoped.length - own;
-  // Update map counter
+
+function updateMapDimming(filtered) {
+  if (!_mapCanvas || _mapSorted.length===0) return;
+  const inRangeSet = new Set(filtered.map(d=>d.id));
+  const scoped = applyScope(filtered);
+  const inScopeSet = new Set(scoped.map(d=>d.id));
+  drawMapCanvas(inRangeSet, inScopeSet);
+
+  // Update counter
+  const own = scoped.filter(d=>d.is_own).length;
+  const oth = scoped.length - own;
   const mapCounter = document.getElementById('mapCounter');
-  if(mapCounter) mapCounter.innerHTML = `${scoped.length} notes${ownCount>0?' (<span style="color:var(--amber)">'+own+' yours</span> + '+oth+' restacks)':''}` + (legendTypeFilter ? ` <span style="color:var(--amber)">· filter: ${legendTypeFilter}</span>` : '');
-  // Use cached cellMap — no querySelectorAll, no re-iteration of full DOM
-  INDEX.cellMap.forEach((cell, id) => {
-    const inRange   = idsInRange.has(id);
-    const inScope   = scopeIds.has(id);
-    const _d = INDEX.byId.get(id);
-    const inLegend  = !legendTypeFilter || (
-      legendTypeFilter === 'converted' ? !!_d?.converted :
-      legendTypeFilter === 'top10'     ? !!(INDEX.top10Set?.has(id)) :
-      _d?.type === legendTypeFilter
-    );
-    cell.classList.toggle('dim', !(inRange && inScope && inLegend));
-  });
+  if (mapCounter) {
+    mapCounter.innerHTML = `${scoped.length} notes${own>0?` <span style="color:var(--amber)">${own} yours</span> ${oth} restacks`:''}${legendTypeFilter ? ` <span style="color:var(--amber)">▸ ${legendTypeFilter}</span>` : ''}`;
+  }
 }
+
+
 
 function renderChart(filtered){
   const canvas = document.getElementById('chartCanvas');
@@ -1415,21 +1548,32 @@ function renderChart(filtered){
     ` ${totalNotes} total notes across ${full.length} months.` : '';
 }
 
-function renderBoards(filtered){
-  const own = filtered.filter(d=>d.is_own).sort((a,b)=>b.likes-a.likes).slice(0,10);
-  const others = filtered.filter(d=>!d.is_own).sort((a,b)=>b.likes-a.likes).slice(0,10);
+function renderBoards(filtered) {
+  const LIMIT = 10;
+  const own    = filtered.filter(d=>d.is_own).sort((a,b)=>b.likes-a.likes).slice(0, LIMIT);
+  const others = filtered.filter(d=>!d.is_own).sort((a,b)=>b.likes-a.likes).slice(0, LIMIT);
+
   function cardHtml(d, i, mineClass){
-    const preview = d.body.length>140 ? d.body.slice(0,140)+'…' : (d.body||'(media only)');
+    const preview = d.body && d.body.length>140 ? d.body.slice(0,140)+'…' : (d.body||'(media only)');
     return `<a class="card" href="${d.link}" target="_blank">
       <div class="card-meta"><span class="card-rank">#${i+1}</span>${d.date.slice(0,10)} · <span class="card-author ${mineClass}">${d.is_own?'You':d.author}</span>
-      ${d.converted?`<span class="badge-conv">+${d.free_subs+d.paid_subs} sub</span>`:''}</div>
-      <div class="card-body">${preview.replace(/\n/g,' ')}</div>
+      ${d.converted?`<span class="badge-conv">${d.free_subs+d.paid_subs} sub${d.free_subs+d.paid_subs>1?'s':''}</span>`:''}</div>
+      <div class="card-body">${preview.replace(/</g,'&lt;')}</div>
       <div class="card-stats"><span style="color:var(--rose)">♥ ${d.likes}</span><span style="color:var(--cyan)">↻ ${d.restacks}</span><span style="color:var(--amber)">💬 ${d.comments}</span></div>
     </a>`;
   }
-  document.getElementById('boardOwn').innerHTML = own.length ? own.map((d,i)=>cardHtml(d,i,'mine')).join('') : '<div class="caption">No notes in this period.</div>';
-  document.getElementById('boardOthers').innerHTML = others.length ? others.map((d,i)=>cardHtml(d,i,'')).join('') : '<div class="caption">No restacks from others in this period.</div>';
+  const ownEl = document.getElementById('boardOwn');
+  const othEl = document.getElementById('boardOthers');
+
+  ownEl.innerHTML = own.length
+    ? own.map((d,i)=>cardHtml(d,i,'mine')).join('')
+    : '<div class="caption">No notes in this period.</div>';
+
+  othEl.innerHTML = others.length
+    ? others.map((d,i)=>cardHtml(d,i,'')).join('')
+    : '<div class="caption">No restacks from others in this period.</div>';
 }
+
 
 function renderConversions(filtered){
   const conv = filtered.filter(d=>d.converted).sort((a,b)=>a.ts-b.ts);
@@ -1811,9 +1955,10 @@ function generateHero(){
   const _subs  = _free + _paid;
   // 1. Engagement/note: (likes+restacks+comments) / own notes
   const _eng   = _nOwn>0 ? ((_likes+_rest+_comm)/_nOwn).toFixed(1) : '0.0';
-  // 2. CTR: clicks / (likes*3)
-  const _imp   = _likes*3;
-  const _ctr   = _imp>0 ? (_clicks/_imp*100).toFixed(1)+'%' : '—';
+  // 2. Avg clicks/note
+  const _avgCN = _nOwn>0 ? (_clicks/_nOwn).toFixed(1) : '—';
+  const _clr   = _likes>0 ? (_clicks/_likes).toFixed(2)+'x' : '—';
+  const _ctr   = _nOwn>0 ? _avgCN+' clicks/note · '+_clr+' per like' : '—';
   // 3. Sub conv rate: subs / clicks
   const _scr   = _clicks>0 ? (_subs/_clicks*100).toFixed(1)+'%' : '—';
   // 4. Paid conv rate: paid / subs
@@ -1827,8 +1972,8 @@ function generateHero(){
   // ── KPI ROW 1: 4 boxes (high-signal) ────────────────────────────────────
   const k4W=(W-PAD*2-GAP*3)/4, kH3=H_KPI3-8;
   kpiBox(PAD,              y,k4W,kH3,_eng,       'Engagement / Note', '(likes+restacks+comments)/own','#E8A33D');
-  kpiBox(PAD+1*(k4W+GAP),  y,k4W,kH3,_clicks.toLocaleString('en-US'),'Clicks Driven','CTR '+_ctr,'#D7DEE6');
-  kpiBox(PAD+2*(k4W+GAP),  y,k4W,kH3,String(_subs),'Subscribers Gained','free '+_free+' · paid '+_paid,'#5FBF73');
+  kpiBox(PAD+1*(k4W+GAP),  y,k4W,kH3,_clicks.toLocaleString('en-US'),'Clicks Driven','avg '+_avgCN+' · '+_clr+' per ♥','#D7DEE6');
+  kpiBox(PAD+2*(k4W+GAP),  y,k4W,kH3,String(_subs),'Subs From Notes','free '+_free+' · paid '+_paid,'#5FBF73');
   kpiBox(PAD+3*(k4W+GAP),  y,k4W,kH3,_scr,       'Sub Conv Rate',    'paid conv '+_pcr,'#5FBF73');
   y+=H_KPI3+GAP;
 
@@ -1994,7 +2139,7 @@ function generateHero(){
   // ── FOOTER ──
   divider(y);y+=12;
   ctx.fillStyle='#5B6573';ctx.font='9px monospace';ctx.textAlign='left';ctx.textBaseline='alphabetic';
-  ctx.fillText('SOURCE: NOTES EXPORT · PROCESSED ENTIRELY IN-BROWSER · Notes Explorer v1.0 by zedcade',PAD,y);
+  ctx.fillText('SOURCE: NOTES EXPORT · PROCESSED ENTIRELY IN-BROWSER · Notes Explorer v2.0 by zedcade',PAD,y);
   ctx.textAlign='right';
   ctx.fillText('GENERATED '+new Date().toISOString().slice(0,10),W-PAD,y);
 
@@ -2031,6 +2176,273 @@ document.getElementById('genHeroBtn').addEventListener('click', ()=>{
     alert('Hero image generation failed: ' + err.message);
   }
 });
+
+
+// ═══════════════════════════════════════════════════════════════════════════
+// IndexedDB — "Notes Explorer" database, one object-store per handle
+// ═══════════════════════════════════════════════════════════════════════════
+const IDB_NAME = 'Notes Explorer';
+
+let _idb = null; // cached connection
+
+// Open at CURRENT version (no version argument = latest).
+// Only bump version when we need to add a new object store.
+function idbOpen() {
+  if (_idb) return Promise.resolve(_idb);
+  return new Promise((resolve, reject) => {
+    // Opening without a version → browser uses the existing (current) version.
+    // onupgradeneeded fires only on first ever open (version 0→1).
+    const req = indexedDB.open(IDB_NAME);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('_meta')) {
+        db.createObjectStore('_meta', { keyPath: 'handle' });
+      }
+    };
+    req.onsuccess  = (e) => { _idb = e.target.result; resolve(_idb); };
+    req.onerror    = (e) => reject(e.target.error);
+  });
+}
+
+function idbEnsureStore(db, handle) {
+  // Object stores can only be created in onupgradeneeded — bump version if missing.
+  return new Promise((resolve, reject) => {
+    if (db.objectStoreNames.contains(handle)) { resolve(db); return; }
+    const newVer = db.version + 1;
+    db.close(); _idb = null;
+    const req = indexedDB.open(IDB_NAME, newVer);
+    req.onupgradeneeded = (e) => {
+      const db2 = e.target.result;
+      if (!db2.objectStoreNames.contains('_meta'))
+        db2.createObjectStore('_meta', { keyPath: 'handle' });
+      if (!db2.objectStoreNames.contains(handle))
+        db2.createObjectStore(handle, { keyPath: 'id' });
+    };
+    req.onsuccess  = (e) => { _idb = e.target.result; resolve(_idb); };
+    req.onerror    = (e) => reject(e.target.error);
+  });
+}
+
+async function idbMergeExport(authorId, handle, json, classifiedData) {
+  if (!handle) return; // can't persist without a stable key
+  try {
+    let db = await idbOpen();
+    db = await idbEnsureStore(db, handle);
+
+    // ── Read existing records ──────────────────────────────────────────────
+    const existing = await new Promise((res, rej) => {
+      const tx  = db.transaction(handle, 'readonly');
+      const req = tx.objectStore(handle).getAll();
+      req.onsuccess = (e) => res(e.target.result);
+      req.onerror   = (e) => rej(e.target.error);
+    });
+    const existingMap = new Map(existing.map(r => [r.id, r]));
+
+    // ── Diff: new/changed items ────────────────────────────────────────────
+    const toWrite = [];
+    const toDelete = [];
+    const incomingIds = new Set(classifiedData.map(d => d.id));
+
+    for (const d of classifiedData) {
+      const prev = existingMap.get(d.id);
+      if (!prev
+          || prev.likes     !== d.likes
+          || prev.restacks  !== d.restacks
+          || prev.comments  !== d.comments
+          || prev.clicks    !== d.clicks
+          || prev.free_subs !== d.free_subs
+          || prev.paid_subs !== d.paid_subs
+         ) {
+        toWrite.push(d);
+      }
+    }
+    // Items in IDB that no longer appear in export → delete
+    for (const id of existingMap.keys()) {
+      if (!incomingIds.has(id)) toDelete.push(id);
+    }
+
+    if (toWrite.length === 0 && toDelete.length === 0) return; // nothing changed
+
+    // ── Write diff ────────────────────────────────────────────────────────
+    await new Promise((res, rej) => {
+      const tx = db.transaction([handle, '_meta'], 'readwrite');
+      const store = tx.objectStore(handle);
+      // Guard: only store items that have a valid numeric id (keyPath)
+      for (const d of toWrite) { if (d.id != null) store.put(d); }
+      for (const id of toDelete) store.delete(id);
+      // Update meta
+      tx.objectStore('_meta').put({
+        handle,
+        author_id:   authorId,
+        author_name: json.author_name  || null,
+        publication: json.publication  || null,
+        last_synced: Date.now(),
+        note_count:  classifiedData.length,
+      });
+      tx.oncomplete = res;
+      tx.onerror    = (e) => rej(e.target.error);
+    });
+    console.log(`[IDB] Wrote ${toWrite.length} new/updated, deleted ${toDelete.length} for @${handle}`);
+  } catch(err) {
+    console.warn('[IDB] merge failed:', err);
+  }
+}
+
+async function idbLoadHandle(handle) {
+  // Returns { meta, items } or null if handle not in IDB
+  try {
+    const db = await idbOpen();
+    if (!db.objectStoreNames.contains(handle)) return null;
+    const [meta, items] = await Promise.all([
+      new Promise((res, rej) => {
+        const tx  = db.transaction('_meta', 'readonly');
+        const req = tx.objectStore('_meta').get(handle);
+        req.onsuccess = e => res(e.target.result || null);
+        req.onerror   = e => rej(e.target.error);
+      }),
+      new Promise((res, rej) => {
+        const tx  = db.transaction(handle, 'readonly');
+        const req = tx.objectStore(handle).getAll();
+        req.onsuccess = e => res(e.target.result);
+        req.onerror   = e => rej(e.target.error);
+      }),
+    ]);
+    if (!meta || !items.length) return null;
+    return { meta, items };
+  } catch(err) {
+    console.warn('[IDB] load failed:', err);
+    return null;
+  }
+}
+
+// ── IDB helper: get all stored meta records ─────────────────────────────
+async function idbAllMeta() {
+  try {
+    const db = await idbOpen();
+    if (!db.objectStoreNames.contains('_meta')) return [];
+    return await new Promise((res, rej) => {
+      const tx  = db.transaction('_meta', 'readonly');
+      const req = tx.objectStore('_meta').getAll();
+      req.onsuccess = e => res(e.target.result || []);
+      req.onerror   = e => rej(e.target.error);
+    });
+  } catch(e) { return []; }
+}
+
+// ── IDB: last-used handle persistence ────────────────────────────────────
+const IDB_LAST_KEY = 'ne_last_handle';
+function idbSetLastHandle(h) { try { localStorage.setItem(IDB_LAST_KEY, h); } catch(e){} }
+function idbGetLastHandle()  { try { return localStorage.getItem(IDB_LAST_KEY)||''; } catch(e){ return ''; } }
+
+// ── Load a handle from IDB into the dashboard ────────────────────────────
+async function idbActivateHandle(handle) {
+  const cached = await idbLoadHandle(handle);
+  if (!cached || !cached.items.length) return false;
+
+  DATA      = (cached.items || []).filter(d => d && d.id != null);
+  if (!DATA.length) return false;
+  AUTHOR_ID = cached.meta.author_id;
+  NOW_TS    = Math.max(...DATA.map(d => d.ts || 0));
+  const pub = cached.meta.publication;
+  PUB_NAME      = (pub && pub.name)      || null;
+  PUB_SUBDOMAIN = (pub && pub.subdomain) || null;
+  PUB_LOGO      = (pub && (pub.logo_url || pub.cover_photo_url)) || null;
+
+  // Always sync handle input to the one we're actually loading
+  const hIn = document.getElementById('handleInput');
+  if (hIn) hIn.value = handle;
+
+  console.log(`[IDB] Loaded ${DATA.length} notes for @${handle}`);
+  buildIndex();
+  buildNetwork();
+  initDashboard();
+
+  idbSetLastHandle(handle);
+
+  // Show cached badge + sync date in byline
+  const byline = document.getElementById('bylineText');
+  if (byline) {
+    const syncDate = new Date(cached.meta.last_synced).toISOString().slice(0,10);
+    byline.innerHTML += ` <span style="color:var(--dim);font-size:12px;font-family:monospace;">[cached ${syncDate} — drop a new export to refresh]</span>`;
+  }
+  return true;
+}
+
+// ── Build / update the handle dropdown in the byline area ────────────────
+async function idbRenderHandleDropdown(allMeta, activeHandle) {
+  if (!allMeta || allMeta.length < 2) return; // dropdown only when >1 handle
+  const byline = document.getElementById('bylineText');
+  if (!byline) return;
+
+  // Remove existing dropdown if any
+  const existingDd = document.getElementById('idbHandleDropdown');
+  if (existingDd) existingDd.remove();
+
+  const wrapper = document.createElement('span');
+  wrapper.id = 'idbHandleDropdown';
+  wrapper.style.cssText = 'margin-left:10px;font-family:monospace;font-size:13px;';
+
+  const sel = document.createElement('select');
+  sel.style.cssText = 'background:#161D29;color:#D7DEE6;border:1px solid #232E3D;border-radius:6px;padding:3px 8px;font-family:monospace;font-size:12px;cursor:pointer;';
+
+  // Sort by last_synced desc
+  const sorted = [...allMeta].sort((a,b)=>b.last_synced-a.last_synced);
+  for (const m of sorted) {
+    const opt = document.createElement('option');
+    opt.value = m.handle;
+    opt.textContent = '@'+m.handle + ' (' + m.note_count + ' notes, '+new Date(m.last_synced).toISOString().slice(0,10)+')';
+    if (m.handle === activeHandle) opt.selected = true;
+    sel.appendChild(opt);
+  }
+
+  sel.addEventListener('change', async () => {
+    const h = sel.value;
+    DATA = null; AUTHOR_ID = null;
+    await idbActivateHandle(h);
+    const allM = await idbAllMeta();
+    idbRenderHandleDropdown(allM, h);
+  });
+
+  wrapper.appendChild(document.createTextNode('Switch: '));
+  wrapper.appendChild(sel);
+  byline.parentElement.insertBefore(wrapper, byline.nextSibling);
+}
+
+async function tryLoadFromIDB() {
+  // On page load: find best handle to load
+  // Priority: 1) pre-filled handle input, 2) last-used handle, 3) most recently synced
+  try {
+    const allMeta = await idbAllMeta();
+    if (!allMeta.length) return false;
+
+    const hIn = document.getElementById('handleInput');
+    const inputHandle = hIn ? hIn.value.trim().replace(/^@/,'').toLowerCase() : '';
+    const lastHandle  = idbGetLastHandle();
+
+    // Pick candidate: prefer explicit input, then last used, then most recent
+    const sorted = [...allMeta].sort((a,b)=>b.last_synced-a.last_synced);
+    const candidate = inputHandle && allMeta.find(m=>m.handle===inputHandle)
+      ? inputHandle
+      : (lastHandle && allMeta.find(m=>m.handle===lastHandle) ? lastHandle : sorted[0].handle);
+
+    const loaded = await idbActivateHandle(candidate);
+    if (!loaded) return false;
+
+    // Show dropdown if multiple handles
+    await idbRenderHandleDropdown(allMeta, candidate);
+    return true;
+  } catch(err) {
+    console.warn('[IDB] tryLoadFromIDB failed:', err);
+    return false;
+  }
+}
+
+// Auto-load from IDB — called after handle init and on blur
+function idbAutoLoad() {
+  if (DATA && DATA.length > 0) return;
+  tryLoadFromIDB();
+}
+
 </script>
 </body>
 </html>
