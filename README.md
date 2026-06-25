@@ -1,8 +1,15 @@
-# substack-notes-explorer v1.1
+# substack-notes-explorer v1.2
 Exports all Notes from your Substack account via API and creates an interactive infographic from the data.
 
 Follow instructions inside [notes-explorer.html](https://zedcade.github.io/substack-notes-explorer/notes-explorer.html) to export your own notes and generate your dashboard and hero image in three simple steps.
 
+v1.2
+* added Navigation Widget to jump between sections
+* made filter and title area fixed on top and filter now applies to all sections
+* added section to show best time for posting notes automagically
+* optimizations for large account
+* bug fixes
+  
 v1.1
 * added indexedDB support to store exports for immediate viewing, plus multi Substack support (dropdown from handle on top of the html to select what export to view if more than one is present in the indexedDB).
 * json Export optimizations
