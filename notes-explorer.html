@@ -11,7 +11,7 @@
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:"DejaVu Sans",Arial,sans-serif;}
-  .wrap{max-width:1180px;margin:0 auto;padding:24px 28px 50px;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px 50px;}
   .mono{font-family:"DejaVu Sans Mono",monospace;}
   .eyebrow{font-family:"DejaVu Sans Mono",monospace;color:var(--amber);font-size:14px;letter-spacing:4px;font-weight:bold;}
   h1{font-family:"DejaVu Sans Mono",monospace;font-size:38px;font-weight:bold;margin:6px 0 0;letter-spacing:-1px;}
@@ -40,8 +40,14 @@
   .dropzone input{display:none;}
   .err-box{background:#1A1414;border:1px solid #5A2C2C;color:var(--rose);border-radius:10px;padding:14px 16px;margin-top:14px;font-size:13.5px;display:none;}
 
+  .sticky-header{position:sticky;top:0;z-index:200;background:var(--bg);padding:14px 0 20px;}
+  .dash-title-row{display:flex;align-items:center;gap:14px;margin-bottom:4px;}
+  .dash-title-row h1{flex:1;font-size:clamp(22px,3vw,32px);}
+  .reload-btn{background:transparent;border:1px solid var(--panel-border);border-radius:8px;color:var(--dim);
+    font-family:inherit;font-size:12px;padding:6px 14px;cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s;}
+  .reload-btn:hover{color:var(--amber);border-color:var(--amber);}
   .filterbar{display:flex;gap:28px;flex-wrap:wrap;align-items:center;background:var(--panel);border:1px solid var(--panel-border);
-    border-radius:14px;padding:18px 22px;margin-bottom:34px;}
+    border-radius:14px;padding:14px 22px;margin-bottom:0;}
   .filter-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
   .filter-label{font-family:"DejaVu Sans Mono",monospace;font-size:12px;letter-spacing:2px;color:var(--dim);margin-right:4px;}
   .btn{font-family:"DejaVu Sans Mono",monospace;font-size:13px;background:var(--panel2);border:1px solid var(--panel-border);
@@ -147,15 +153,16 @@
 
   .boards{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
   .board-title{font-family:"DejaVu Sans Mono",monospace;font-size:14px;letter-spacing:1.5px;margin-bottom:14px;font-weight:bold;}
-  .board-title.mine{color:var(--amber);}
+  .board-title
   .board-title.others{color:var(--cyan);}
   .card{background:var(--panel2);border:1px solid var(--panel-border);border-radius:10px;padding:14px 16px;margin-bottom:10px;
     text-decoration:none;display:block;color:var(--text);transition:border-color .15s;}
   .card:hover{border-color:var(--amber);transition:border-color .15s;}
   .card-rank{font-family:"DejaVu Sans Mono",monospace;color:var(--dim);font-size:12px;margin-right:8px;}
+  .card-medal{font-size:15px;margin-right:6px;line-height:1;}
   .card-meta{font-family:"DejaVu Sans Mono",monospace;font-size:11.5px;color:var(--dim);margin-bottom:6px;}
   .card-author{color:var(--cyan);font-weight:bold;}
-  .card-author.mine{color:var(--amber);}
+  .card-author
   .card-body{font-size:13.5px;line-height:1.45;margin-bottom:4px;
     display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden;line-clamp:7;}
   .card-stats{font-family:"DejaVu Sans Mono",monospace;font-size:12px;}
@@ -189,20 +196,147 @@
   .handle-row{display:flex;align-items:center;gap:10px;flex-wrap:nowrap;margin-bottom:10px;}
   .handle-row span{white-space:nowrap;}
   .handle-warning{font-size:13px;color:var(--rose);display:none;}
+
+  .heatmap-grid{display:grid;grid-template-columns:32px repeat(24,1fr);gap:2px;margin-top:12px;font-family:'DejaVu Sans Mono',monospace;font-size:10px;}
+  .heatmap-cell{height:22px;border-radius:3px;cursor:default;transition:opacity .15s;}
+  .heatmap-cell:hover{opacity:0.75;}
+  .heatmap-label{height:22px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;color:var(--dim);font-size:10px;}
+  .heatmap-hlabel{height:16px;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:9px;}
+  .heatmap-empty{height:16px;}
+
+  /* ── Section Nav Widget ──────────────────────────────────── */
+
+  #secNav.nav-active {
+    opacity: 1;
+    pointer-events: auto;
+    filter: none;
+  }
+  #secNav {
+    position: fixed;
+    left: 18px;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: rgba(11,14,20,0.82);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 32px rgba(0,0,0,0.5);
+    overflow: hidden;
+    opacity: 0.25;
+    pointer-events: none;
+    filter: grayscale(1);
+    transition: opacity 0.3s, filter 0.3s;
+  }
+  #secNavHeader {
+    background: var(--amber);
+    color: #0B0E14;
+    font-family: 'DejaVu Sans Mono', monospace;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 2.5px;
+    text-align: center;
+    padding: 7px 14px 6px;
+    border-radius: 14px 14px 0 0;
+    margin-bottom: 6px;
+    user-select: none;
+  }
+  #secNavFooter {
+    display: block;
+    background: rgba(79,209,197,0.12);
+    color: rgba(79,209,197,0.75);
+    font-family: 'DejaVu Sans Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.8px;
+    text-align: center;
+    padding: 6px 14px 7px;
+    border-radius: 0 0 14px 14px;
+    margin-top: 4px;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    user-select: none;
+    cursor: pointer;
+  }
+  #secNavFooter:hover {
+    background: rgba(79,209,197,0.22);
+    color: rgba(79,209,197,1);
+  }
+  .snav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px 5px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    font-family: 'DejaVu Sans Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    color: rgba(154,171,184,0.6);
+    user-select: none;
+  }
+  .snav-item:hover {
+    background: rgba(255,255,255,0.07);
+    color: rgba(215,222,230,0.9);
+  }
+  .snav-item.active {
+    background: rgba(232,163,61,0.13);
+    color: var(--amber);
+  }
+  .snav-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+    flex-shrink: 0;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .snav-item.active .snav-dot {
+    opacity: 1;
+    transform: scale(1.4);
+    background: var(--amber);
+  }
+  .snav-item:hover .snav-dot {
+    opacity: 0.85;
+  }
+
 </style>
 </head>
 <body>
+
+  <!-- Section Navigation Widget -->
+  <div id="secNav">
+    <div id="secNavHeader">NOTES EXPLORER</div>
+    <div style="padding:4px 6px 0;display:flex;flex-direction:column;gap:2px;">
+    <div class="snav-item" data-target="sec-kpis"><span class="snav-dot"></span>KPIs</div>
+    <div class="snav-item" data-target="sec-cluster"><span class="snav-dot"></span>Cluster Map</div>
+    <div class="snav-item" data-target="sec-activity"><span class="snav-dot"></span>Activity Scan</div>
+    <div class="snav-item" data-target="sec-growth"><span class="snav-dot"></span>Growth Funnel</div>
+    <div class="snav-item" data-target="sec-scatter"><span class="snav-dot"></span>Click Efficiency</div>
+    <div class="snav-item" data-target="sec-heatmap"><span class="snav-dot"></span>Best Posting Times</div>
+    <div class="snav-item" data-target="sec-conversion"><span class="snav-dot"></span>Conversion Spotlight</div>
+    <div class="snav-item" data-target="sec-leaderboards"><span class="snav-dot"></span>Leaderboards</div>
+        <div class="snav-item" data-target="sec-network"><span class="snav-dot"></span>Your Network</div>
+    <div class="snav-item" data-target="sec-hero"><span class="snav-dot"></span>Hero Image</div>
+    </div>
+    <a id="secNavFooter" href="https://alexanderipfelkofer.substack.com" target="_blank" rel="noopener">Brought to you by <i>TFTD</i></a>
+  </div>
+
 <div class="wrap">
 
+  <div id="setupView" style="padding-top:24px;">
   <div class="eyebrow">NOTES.SYS — STATUS REPORT</div>
   <div class="title-row">
-    <img id="pubLogoImg" src="" alt="" style="display:none;width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0;">
     <h1>Notes, Defragmented<span class="cursor">_</span></h1>
   </div>
-  <div class="byline" id="bylineText">Drop in your Notes export to visualize your data.</div>
+  <div class="byline">Drop in your Notes export to visualize your data.</div>
   <div class="rule"></div>
-
-  <div id="setupView">
 
     <div class="step">
       <h3><span class="step-num">1</span>Get the export tool</h3>
@@ -258,39 +392,44 @@
       <div class="err-box" id="errBox"></div>
     </div>
 
-  </div>
+  </div><!-- /setupView -->
 
   <div id="dashboardView">
 
-    <div style="text-align:right;margin-bottom:10px;">
-      <span class="reload-link" id="reloadLink">↺ load a different export</span>
-    </div>
-
-    <div class="filterbar">
-      <div class="filter-group">
-        <span class="filter-label">SCOPE</span>
-        <button class="btn active" data-scope="all">All Notes</button>
-        <button class="btn" data-scope="own">Mine Only</button>
-        <button class="btn" data-scope="curated">Curated</button>
-        <button class="btn" data-scope="others">Restacked From Others</button>
+    <div class="sticky-header">
+      <div class="eyebrow">NOTES.SYS — STATUS REPORT</div>
+      <div class="dash-title-row">
+        <img id="pubLogoImg" src="" alt="" style="display:none;width:40px;height:40px;border-radius:8px;object-fit:cover;flex-shrink:0;">
+        <h1 style="margin:0;">Notes, Defragmented<span class="cursor">_</span></h1>
+        <button class="reload-btn" id="reloadLink">↺ load a different export</button>
       </div>
-      <div class="filter-group">
-        <span class="filter-label">PERIOD</span>
-        <button class="btn active" data-period="all">All Time</button>
-        <button class="btn" data-period="ytd">YTD</button>
-        <button class="btn" data-period="mtd">MTD</button>
-        <button class="btn" data-period="custom">Custom</button>
+      <div class="byline" id="bylineText" style="margin:2px 0 10px;"></div>
+      <div class="filterbar">
+        <div class="filter-group">
+          <span class="filter-label">SCOPE</span>
+          <button class="btn active" data-scope="all">All Notes</button>
+          <button class="btn" data-scope="own">Mine Only</button>
+          <button class="btn" data-scope="curated">Curated</button>
+          <button class="btn" data-scope="others">Restacked From Others</button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">PERIOD</span>
+          <button class="btn active" data-period="all">All Time</button>
+          <button class="btn" data-period="ytd">YTD</button>
+          <button class="btn" data-period="mtd">MTD</button>
+          <button class="btn" data-period="custom">Custom</button>
+        </div>
+        <div class="custom-range" id="customRange">
+          <input type="date" id="dateFrom">
+          <span class="mono" style="color:var(--dim);">→</span>
+          <input type="date" id="dateTo">
+        </div>
       </div>
-      <div class="custom-range" id="customRange">
-        <input type="date" id="dateFrom">
-        <span class="mono" style="color:var(--dim);">→</span>
-        <input type="date" id="dateTo">
-      </div>
-    </div>
+    </div><!-- /sticky-header -->
 
-    <div class="kpis" id="kpis"></div>
+    <div id="sec-kpis"><div class="kpis" id="kpis"></div></div>
 
-    <div class="section">
+    <div class="section" id="sec-cluster">
       <div class="section-label">CLUSTER MAP — every note, in order, hover for detail</div>
       <div class="panel">
         <canvas id="mapCanvas" style="width:100%;display:block;cursor:pointer;"></canvas>
@@ -306,40 +445,51 @@
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" id="sec-activity">
       <div class="section-label">ACTIVITY SCAN — notes per month (amber = mine, cyan = restacked from others)</div>
       <div class="panel">
         <canvas id="chartCanvas" width="1100" height="320"></canvas>
+        <div id="chartLineLegend" style="display:flex;flex-wrap:wrap;align-items:center;margin-top:10px;padding:0 2px"></div>
         <div class="caption" id="chartCaption"></div>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-label">YOUR NETWORK — accounts you amplify &amp; converse with most (bubble size = weighted interaction)</div>
-      <div class="panel">
-        <canvas id="networkCanvas" width="1100" height="500"></canvas>
-        <div class="caption" id="networkCaption">Amber = restacked more than quoted/replied. Teal = quoted/replied to more than restacked. Bubble size = combined interaction weight. Substack doesn't expose incoming engagement on notes, so this shows only what <b>you</b> send outward.</div>
-      </div>
-    </div>
-
-    <div class="section">
+    <div class="section" id="sec-growth">
       <div class="section-label">GROWTH FUNNEL — subscribers &amp; follows gained per month</div>
       <canvas id="growthCanvas" width="1100" height="330" style="width:100%;display:block;"></canvas>
       <div class="caption" id="growthCaption"></div>
     </div>
 
-    <div class="section">
+    <div class="section" id="sec-scatter">
       <div class="section-label">CLICK EFFICIENCY — likes vs clicks · bubble size = restacks<button id="scatterScaleBtn" class="btn" style="font-size:11px;padding:5px 10px;margin-left:16px;letter-spacing:0;" onclick="scatterLogScale=!scatterLogScale;this.textContent=scatterLogScale?'LOG ✓':'LOG';this.classList.toggle('active',scatterLogScale);try{renderScatter(dateFiltered());}catch(e){}">LOG</button></div>
       <div style="position:relative;">
         <canvas id="scatterCanvas" width="1100" height="420" style="width:100%;display:block;cursor:default;"></canvas>
         <div id="growthTip" style="position:fixed;display:none;background:#0B0E14;border:1px solid #232E3D;border-radius:8px;padding:8px 12px;font-size:12px;font-family:'DejaVu Sans Mono',monospace;color:#D7DEE6;pointer-events:none;z-index:9999;max-width:220px;line-height:1.6;"></div>
 <div id="scatterTip" style="position:fixed;display:none;background:#0B0E14;border:1px solid #232E3D;border-radius:8px;padding:8px 12px;font-size:12px;font-family:'DejaVu Sans Mono',monospace;color:#D7DEE6;pointer-events:none;z-index:9999;max-width:300px;line-height:1.5;"></div>
       </div>
+      <div id="scatterLineLegend" style="display:flex;flex-wrap:wrap;align-items:center;margin-top:10px;padding:0 2px"></div>
       <div class="caption">Each dot = one of <b>your own</b> notes. X = likes &middot; Y = total clicks &middot; bubble size = restacks &middot; <b style="color:#FFD700">★ gold ring</b> = exceptional &middot; <b style="color:#E8A33D">amber ring</b> = strong. <b>Clicks/like ratio</b> = how well engagement converted to actual traffic — a high ratio means your audience didn't just like it, they acted on it. Restacks from others excluded (Substack only provides stats for your own notes).</div>
     </div>
 
-    <div class="section">
-      <div class="section-label">LEADERBOARDS — ranked by likes, within selected period</div>
+    <div class="section" id="sec-heatmap">
+      <div class="section-label">BEST POSTING TIMES &mdash; avg likes by hour &times; day of week (your notes only)</div>
+      <div class="panel">
+        <div id="heatmapWrap"></div>
+        <div id="globalTip" style="position:fixed;display:none;background:#0B0E14;border:1px solid rgba(232,163,61,0.5);border-radius:8px;padding:8px 12px;font-size:12px;font-family:'DejaVu Sans Mono',monospace;color:#D7DEE6;pointer-events:none;z-index:9999;max-width:260px;line-height:1.5;"></div>
+        <div class="caption" id="heatmapCaption"></div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-conversion">
+      <div class="section-label">CONVERSION SPOTLIGHT — notes that turned into a subscriber, within selected period</div>
+      <div class="panel">
+        <div id="convList"></div>
+        <div class="caption" id="convCaption"></div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-leaderboards">
+      <div class="section-label">LEADERBOARDS — top 10 by likes · 🥇🥈🥉 top 3 · 👆 clicks · ⚡ clicks/like</div>
       <div class="boards">
         <div>
           <div class="board-title mine">★ TOP 10 — YOUR NOTES</div>
@@ -352,15 +502,16 @@
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-label">CONVERSION SPOTLIGHT — notes that turned into a subscriber, within selected period</div>
+
+    <div class="section" id="sec-network">
+      <div class="section-label">YOUR NETWORK — accounts you amplify &amp; converse with most (bubble size = weighted interaction)</div>
       <div class="panel">
-        <div id="convList"></div>
-        <div class="caption" id="convCaption"></div>
+        <canvas id="networkCanvas" width="1100" height="500"></canvas>
+        <div class="caption" id="networkCaption">Amber = restacked more than quoted/replied. Teal = quoted/replied to more than restacked. Bubble size = combined interaction weight. Substack doesn't expose incoming engagement on notes, so this shows only what <b>you</b> send outward.</div>
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" id="sec-hero">
       <div class="section-label">HERO IMAGE — for posting</div>
       <div class="panel">
         <button class="download-btn" id="genHeroBtn">🖼️ Generate Hero Image</button>
@@ -373,7 +524,7 @@
     </div>
 
     <footer>
-      <div id="footerSource">SOURCE: NOTES EXPORT · PROCESSED ENTIRELY IN-BROWSER · Notes Explorer v1.1 by <a href="https://github.com/zedcade/substack-notes-explorer" target="_blank" class="pub-link">zedcade</a></div>
+      <div id="footerSource">SOURCE: NOTES EXPORT · PROCESSED ENTIRELY IN-BROWSER · Notes Explorer v1.2 by <a href="https://github.com/zedcade/substack-notes-explorer" target="_blank" class="pub-link">zedcade</a></div>
       <div id="footerDate"></div>
     </footer>
 
@@ -465,9 +616,9 @@ function buildIndex() {
     arr:      ownNotes.reduce((s,d)=>s+(d.arr||0),0),
   };
 
-  INDEX = { ownNotes, otherNotes, allSorted, byId, byMonth, totals, cellMap: new Map(), top10Set: new Set() };
+  const _minTs = DATA.length ? DATA.reduce((m,d)=>d.ts<m?d.ts:m, Infinity) : 0;
+  INDEX = { ownNotes, otherNotes, allSorted, byId, byMonth, totals, cellMap: new Map(), top10Set: new Set(), minTs: _minTs };
 }
-
 
 let DATA = [];
 let AUTHOR_ID = null;
@@ -593,7 +744,6 @@ function hexAlpha(h,a){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5)
   });
   if (rememberCb) rememberCb.addEventListener('change', syncHandleSave);
 
-
   function requireHandle(){
     if (!cleanHandle()) {
       handleWarning.style.display = 'inline';
@@ -683,7 +833,7 @@ function loadFile(file){
         DATA = classifyNotes(items, authorId, json.author_name||null, json.author_handle||null);
         if (DATA.length === 0) { document.body.removeChild(_loadingDiv); showError('No notes found in this export.'); return; }
         AUTHOR_ID = authorId;
-        NOW_TS = Math.max(...DATA.map(d=>d.ts));
+        NOW_TS = DATA.reduce((m,d)=>d.ts>m?d.ts:m, 0);
         const _fo = items.find(it => String(it.user_id) === String(authorId));
         const _pub = json.publication || (_fo && _fo.user_primary_publication ? _fo.user_primary_publication : null);
         PUB_NAME      = (_pub ? _pub.name      : null) || PUB_NAME || null;
@@ -724,75 +874,123 @@ function loadFile(file){
 document.getElementById('reloadLink').addEventListener('click', ()=>{
   document.getElementById('dashboardView').style.display = 'none';
   document.getElementById('setupView').style.display = 'block';
+  var _nav=document.getElementById('secNav'); if(_nav) _nav.classList.remove('nav-active');
   const _eb = document.getElementById('errBox'); if (_eb) { _eb.textContent=''; _eb.style.display='none'; }
   const _dd = document.getElementById('idbHandleDropdown'); if (_dd) _dd.remove();
 });
 
-function buildNetwork(){
-  const _nc=document.getElementById('networkCanvas');if(_nc){_nc.__layout=null;_nc.__hovered=null;}
-  const partners = {};
+function buildNetwork(dataset){
+  const _nc=document.getElementById('networkCanvas');if(_nc){_nc.__layout=null;_nc.__hovered=null;_nc.__colors=null;}
+  const _data = dataset || DATA;
+  const partners = new Map();
   function add(name, handle, kind, weight){
     if (!name || name==='Unknown') return;
-    if (!partners[name]) partners[name] = { name, handle, restacks:0, conversations:0, weight:0 };
-    partners[name][kind]++;
-    partners[name].weight += weight;
-    if (handle) partners[name].handle = handle;
+    if (!partners.has(name)) partners.set(name, { name, handle, restacks:0, conversations:0, weight:0 });
+    const _p = partners.get(name); _p[kind]++; _p.weight += weight;
+    if (handle) _p.handle = handle;
   }
-  for (const d of DATA) {
+  for (const d of _data) {
     if (!d.is_own) add(d.author, d.author_handle, 'restacks', 1 + d.likes*0.05);
     if (d.is_own && d.quoted_note_author && d.quoted_note_author_id !== AUTHOR_ID) add(d.quoted_note_author, null, 'conversations', 1);
   }
-  NETWORK = Object.values(partners).sort((a,b)=>b.weight-a.weight);
+  NETWORK = Array.from(partners.values()).sort((a,b)=>b.weight-a.weight);
 }
 
+
 function layoutBubbles(nodes, width, height){
-  const maxW = Math.max(...nodes.map(n=>n.weight), 1);
-  nodes.forEach(n=>{
-    n.r = 14 + Math.sqrt(n.weight/maxW) * 58;
-    n.x = width/2 + (Math.random()-0.5)*width*0.7;
-    n.y = height/2 + (Math.random()-0.5)*height*0.7;
+  const maxW = Math.max(nodes.reduce((m,n)=>n.weight>m?n.weight:m,0), 1);
+  nodes.sort((a,b)=>b.weight-a.weight);
+  nodes.forEach(n=>{ n.r = 14 + Math.sqrt(n.weight/maxW) * 58; });
+
+  const PAD = 1;
+  const LEG_PAD = 36;
+  const cx = width/2, cy = height/2;
+  const midY = cy - LEG_PAD/2;
+
+  function clamp(n) {
+    n.x = Math.max(n.r+PAD, Math.min(width  - n.r - PAD, n.x));
+    n.y = Math.max(n.r+PAD, Math.min(height - n.r - PAD - LEG_PAD, n.y));
+  }
+
+  // Seed: largest at center, others in concentric rings outward
+  nodes.forEach((n, i) => {
+    if (i === 0) { n.x = cx; n.y = midY; return; }
+    const ring = Math.ceil((Math.sqrt(8*i+1)-1)/2);
+    const ringCount = ring * 6;
+    const posInRing = i - ring*(ring-1)/2*2 - ring + 1;
+    const angle = (posInRing / ringCount) * Math.PI * 2 + (ring * 0.3);
+    const ringRadius = ring * (nodes[0].r * 1.05);
+    n.x = cx + Math.cos(angle) * ringRadius;
+    n.y = midY + Math.sin(angle) * ringRadius;
   });
-  for (let iter=0; iter<260; iter++){
-    nodes.forEach(n=>{ n.x += (width/2-n.x)*0.004; n.y += (height/2-n.y)*0.004; });
-    for (let i=0;i<nodes.length;i++){
-      for (let j=i+1;j<nodes.length;j++){
+
+  // Phase 1: gravity (mass-weighted so large bubbles resist displacement) + separation
+  for (let iter = 0; iter < 500; iter++) {
+    const gBase = iter < 60 ? 0.006 : 0.001 * Math.max(0, 1 - (iter-60)/200);
+    nodes.forEach(n=>{
+      // Larger bubbles have more mass — gravity moves them proportionally less
+      const massFactor = 1 - 0.7 * (n.r / nodes[0].r);
+      const g = gBase * massFactor;
+      n.x += (cx-n.x)*g; n.y += (midY-n.y)*g;
+    });
+    for (let i=0; i<nodes.length; i++){
+      for (let j=i+1; j<nodes.length; j++){
         const a=nodes[i], b=nodes[j];
-        let dx=b.x-a.x, dy=b.y-a.y;
-        let dist = Math.sqrt(dx*dx+dy*dy) || 0.01;
-        const minDist = a.r+b.r+4;
-        if (dist < minDist){
-          const overlap=(minDist-dist)/2, ux=dx/dist, uy=dy/dist;
-          a.x -= ux*overlap; a.y -= uy*overlap;
-          b.x += ux*overlap; b.y += uy*overlap;
+        const dx=b.x-a.x, dy=b.y-a.y;
+        const dist2=dx*dx+dy*dy;
+        const minD=a.r+b.r+PAD;
+        if(dist2 < minD*minD){
+          const dist=Math.sqrt(dist2)||0.001;
+          // Smaller bubble absorbs more of the push
+          const totalR = a.r + b.r;
+          const pushA = (minD-dist) * (b.r/totalR);
+          const pushB = (minD-dist) * (a.r/totalR);
+          const ux=dx/dist, uy=dy/dist;
+          a.x-=ux*pushA; a.y-=uy*pushA;
+          b.x+=ux*pushB; b.y+=uy*pushB;
         }
       }
     }
-    const PAD5=5; nodes.forEach(n=>{ n.x = Math.max(n.r+PAD5, Math.min(width-n.r-PAD5, n.x)); n.y = Math.max(n.r+PAD5, Math.min(height-n.r-PAD5, n.y)); });
+    nodes.forEach(clamp);
+  }
+
+  // Phase 2: hard-settle — pure separation until zero overlaps
+  for (let iter=0; iter<150; iter++){
+    let moved=false;
+    for(let i=0; i<nodes.length; i++){
+      for(let j=i+1; j<nodes.length; j++){
+        const a=nodes[i], b=nodes[j];
+        const dx=b.x-a.x, dy=b.y-a.y;
+        const dist2=dx*dx+dy*dy;
+        const minD=a.r+b.r+PAD;
+        if(dist2 < minD*minD - 0.1){
+          const dist=Math.sqrt(dist2)||0.001;
+          const push=(minD-dist)*0.5;
+          const ux=dx/dist, uy=dy/dist;
+          a.x-=ux*push; a.y-=uy*push;
+          b.x+=ux*push; b.y+=uy*push;
+          moved=true;
+        }
+      }
+    }
+    nodes.forEach(clamp);
+    if(!moved) break;
   }
   return nodes;
 }
 
-function renderNetwork(){
-  const canvas = document.getElementById('networkCanvas');
+function _drawNetworkCanvas(canvas) {
+  const top = canvas.__layout;
+  if (!top || !top.length) return;
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
   ctx.clearRect(0,0,W,H);
-  if (NETWORK.length===0){
-    ctx.fillStyle = '#5B6573'; ctx.font='14px DejaVu Sans, sans-serif';
-    ctx.fillText('No restack/conversation partners found in this export.', 20, 40);
-    return;
+  // Cache CSS vars on canvas to avoid getComputedStyle on every hover redraw
+  if (!canvas.__colors) {
+    const _cs = getComputedStyle(document.documentElement);
+    canvas.__colors = { cyan: _cs.getPropertyValue('--cyan').trim(), amb: _cs.getPropertyValue('--amber').trim() };
   }
-  let top;
-  if (canvas.__layout && canvas.__layout.length > 0) {
-    top = canvas.__layout;
-  } else {
-    top = NETWORK.slice(0, 60).map(n=>Object.assign({}, n));
-    layoutBubbles(top, W-24, H-24);
-    top.forEach(n=>{n.x+=12;n.y+=12;});
-    canvas.__layout = top;
-  }
-  const _cs = getComputedStyle(document.documentElement);
-  const _cyan=_cs.getPropertyValue('--cyan').trim(), _amb=_cs.getPropertyValue('--amber').trim();
+  const _cyan = canvas.__colors.cyan, _amb = canvas.__colors.amb;
   function drawWrappedName(ctx, name, x, y, r){
     const maxChars = Math.max(6, Math.floor(r/4.5));
     const fontSize = Math.min(12, Math.max(8, r/4));
@@ -850,7 +1048,6 @@ function renderNetwork(){
   canvas.__nodes = top;
 }
 
-
 // Activity chart tooltip
 (function(){
   const chartCanvas = document.getElementById('chartCanvas');
@@ -889,7 +1086,9 @@ function renderNetwork(){
   chartCanvas.addEventListener('mouseleave',()=>{ chartTip.style.display='none'; });
 })();
 const netTooltip = document.getElementById('netTooltip');
+let _netRaf=false;
 document.getElementById('networkCanvas').addEventListener('mousemove', (e)=>{
+  if(_netRaf) return; _netRaf=true; requestAnimationFrame(()=>{ _netRaf=false; });
   const canvas = e.target;
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width/rect.width, scaleY = canvas.height/rect.height;
@@ -899,7 +1098,7 @@ document.getElementById('networkCanvas').addEventListener('mousemove', (e)=>{
   for (const n of nodes){ if (Math.hypot(mx-n.x, my-n.y) <= n.r) { hit = n; break; } }
   const _prevHov = canvas.__hovered || null;
   canvas.__hovered = hit ? hit.name : null;
-  if (canvas.__hovered !== _prevHov) renderNetwork();
+  if (canvas.__hovered !== _prevHov) _drawNetworkCanvas(canvas);
   if (hit){
     netTooltip.innerHTML = `<b>${hit.name}</b>${hit.handle?` · @${hit.handle}`:''}<br>↻ ${hit.restacks} restacked &nbsp; 💬 ${hit.conversations} conversations`;
     netTooltip.style.display='block';
@@ -1012,11 +1211,40 @@ document.getElementById('scatterCanvas').addEventListener('click', function(e) {
   }
 });
 
+function renderNetwork(){
+  const canvas = document.getElementById('networkCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+  if (NETWORK.length===0){
+    ctx.fillStyle = '#5B6573'; ctx.font='14px DejaVu Sans, sans-serif';
+    ctx.fillText('No restack/conversation partners found in this export.', 20, 40);
+    return;
+  }
+  let top;
+  if (canvas.__layout && canvas.__layout.length > 0) {
+    top = canvas.__layout;
+  } else {
+    top = NETWORK.slice(0, 60).map(n=>Object.assign({}, n));
+    layoutBubbles(top, W-24, H-24);
+    top.forEach(n=>{n.x+=12;n.y+=12;});
+    canvas.__layout = top;
+  }
+  _drawNetworkCanvas(canvas);
+}
 function initDashboard(){
   document.getElementById('setupView').style.display = 'none';
   document.getElementById('dashboardView').style.display = 'block';
+  var _nav=document.getElementById('secNav');
+  if(_nav){
+    _nav.classList.add('nav-active');
+    // Reset highlight to first item
+    _nav.querySelectorAll('.snav-item').forEach(function(el,i){ el.classList.toggle('active', i===0); });
+    // Scroll to top so widget aligns correctly
+    window.scrollTo({top:0,behavior:'instant'});
+  }
   const handle = document.getElementById('handleInput').value.trim();
-  const minD = new Date(Math.min(...DATA.map(d=>d.ts)));
+  const minD = new Date(DATA.reduce((m,d)=>d.ts<m?d.ts:m, Infinity));
   const maxD = new Date(NOW_TS);
   document.getElementById('bylineText').innerHTML =
     `<b>@${handle || 'your account'}</b>${PUB_NAME && PUB_SUBDOMAIN ? ' · <a href="https://'+PUB_SUBDOMAIN+'.substack.com" target="_blank" class="pub-link">'+PUB_NAME+'</a>' : ''} · data ${minD.toISOString().slice(0,10)} → ${maxD.toISOString().slice(0,10)}`;
@@ -1065,7 +1293,7 @@ function initDashboard(){
 
 function dateFiltered(){
   let fromTs, toTs;
-  const minTs = Math.min(...DATA.map(d=>d.ts));
+  const minTs = INDEX ? INDEX.minTs : DATA.reduce((m,d)=>d.ts<m?d.ts:m, Infinity);
   if(state.period==='all'){ fromTs=minTs; toTs=NOW_TS; }
   else if(state.period==='ytd'){ fromTs=new Date(new Date(NOW_TS).getFullYear(),0,1).getTime(); toTs=NOW_TS; }
   else if(state.period==='mtd'){ const _d=new Date(NOW_TS); fromTs=new Date(_d.getFullYear(),_d.getMonth(),1).getTime(); toTs=NOW_TS; }
@@ -1233,7 +1461,6 @@ function renderKPIs(scoped){
   document.getElementById('kpis').innerHTML = kpiHtml;
 }
 
-
 // ── Canvas cluster map ───────────────────────────────────────────────────
 const MAP_COLORS = {
   original: '#E8A33D', promo: '#C9701E', curated: '#F0E080',
@@ -1247,7 +1474,10 @@ let _mapTooltip = null;
 let _mapLastRangeSet = null;
 let _mapLastScopeSet = null;
 
+let _lastBuildMapDataLen = -1;
 function buildMap() {
+  if (DATA && DATA.length === _lastBuildMapDataLen) { updateMapDimming(dateFiltered()); return; }
+  _lastBuildMapDataLen = DATA ? DATA.length : -1;
   _mapCanvas = document.getElementById('mapCanvas');
   if (!_mapCanvas) return;
   _mapTooltip = document.getElementById('tooltip');
@@ -1267,7 +1497,7 @@ function buildMap() {
   _mapTop10 = new Set(scoredPool.slice(0,top10Cut).map(d=>d.id));
   if (INDEX) INDEX.top10Set = _mapTop10;
 
-  // Size canvas — MAP_BUF gives edge cells room to zoom without clipping
+  // Size canvas — MAP_BUF gives edge cells room to zoom
   const MAP_BUF = 8;
   const W = _mapCanvas.parentElement.clientWidth - 56 || 1000;
   const total = sorted.length;
@@ -1301,7 +1531,11 @@ function _mapCellAt(mx, my) {
   return null;
 }
 
+let _mapMoveRaf = false;
 function _onMapMove(e) {
+  if (_mapMoveRaf) return;
+  _mapMoveRaf = true;
+  requestAnimationFrame(() => { _mapMoveRaf = false; });
   const rect = _mapCanvas.getBoundingClientRect();
   const scaleX = _mapCanvas.width / rect.width;
   const scaleY = _mapCanvas.height / rect.height;
@@ -1350,7 +1584,15 @@ function _onMapClick(e) {
 let _mapHoverIdx = -1;
 
 function _drawCell(ctx, x, y, w, h, color, alpha, isTop10, isHover) {
-  const r = 2; // uniform 2px radius for all cells
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = color;
+  // Fast path for tiny cells — skip rounded corners, scaling, top10 decorations
+  if (w <= 5) {
+    ctx.fillRect(x, y, w, h);
+    ctx.globalAlpha = 1;
+    return;
+  }
+  const r = 2;
   const scale = isHover ? 1.35 : 1.0;
   let dx = x, dy = y, dw = w, dh = h;
   if (isHover) {
@@ -1358,43 +1600,26 @@ function _drawCell(ctx, x, y, w, h, color, alpha, isTop10, isHover) {
     const ey = (h * (scale - 1)) / 2;
     dx = x - ex; dy = y - ey; dw = w * scale; dh = h * scale;
   }
-  ctx.globalAlpha = alpha;
-  ctx.fillStyle = color;
-  // Rounded rect (roundRect available in modern browsers, fallback manual)
   if (ctx.roundRect) {
-    ctx.beginPath();
-    ctx.roundRect(dx, dy, dw, dh, r);
-    ctx.fill();
+    ctx.beginPath(); ctx.roundRect(dx, dy, dw, dh, r); ctx.fill();
   } else {
     ctx.beginPath();
-    ctx.moveTo(dx + r, dy);
-    ctx.lineTo(dx + dw - r, dy);
-    ctx.arcTo(dx + dw, dy, dx + dw, dy + r, r);
-    ctx.lineTo(dx + dw, dy + dh - r);
-    ctx.arcTo(dx + dw, dy + dh, dx + dw - r, dy + dh, r);
-    ctx.lineTo(dx + r, dy + dh);
-    ctx.arcTo(dx, dy + dh, dx, dy + dh - r, r);
-    ctx.lineTo(dx, dy + r);
-    ctx.arcTo(dx, dy, dx + r, dy, r);
-    ctx.closePath();
-    ctx.fill();
+    ctx.moveTo(dx+r, dy); ctx.lineTo(dx+dw-r, dy);
+    ctx.arcTo(dx+dw, dy, dx+dw, dy+r, r); ctx.lineTo(dx+dw, dy+dh-r);
+    ctx.arcTo(dx+dw, dy+dh, dx+dw-r, dy+dh, r); ctx.lineTo(dx+r, dy+dh);
+    ctx.arcTo(dx, dy+dh, dx, dy+dh-r, r); ctx.lineTo(dx, dy+r);
+    ctx.arcTo(dx, dy, dx+r, dy, r); ctx.closePath(); ctx.fill();
   }
   if (isTop10 && alpha > 0.5) {
-    // inset ring
     ctx.globalAlpha = Math.min(alpha, 0.55);
     ctx.strokeStyle = 'rgba(255,255,255,0.7)';
     ctx.lineWidth = isHover ? 2 : 1.5;
     if (ctx.roundRect) {
       ctx.beginPath(); ctx.roundRect(dx+1, dy+1, dw-2, dh-2, Math.max(1,r-1)); ctx.stroke();
-    } else {
-      ctx.strokeRect(dx+1, dy+1, dw-2, dh-2);
-    }
-    // white dot top-right
+    } else { ctx.strokeRect(dx+1, dy+1, dw-2, dh-2); }
     ctx.globalAlpha = isHover ? 1 : 0.9;
     ctx.fillStyle = '#fff';
-    ctx.beginPath();
-    ctx.arc(dx+dw-2.5, dy+2.5, isHover ? 2 : 1.5, 0, Math.PI*2);
-    ctx.fill();
+    ctx.beginPath(); ctx.arc(dx+dw-2.5, dy+2.5, isHover ? 2 : 1.5, 0, Math.PI*2); ctx.fill();
   }
   ctx.globalAlpha = 1;
 }
@@ -1410,12 +1635,14 @@ function drawMapCanvas(inRangeSet, inScopeSet) {
   ctx.clearRect(0, 0, W, H);
   const total = _mapSorted.length;
 
-  // Draw non-hovered cells first, hovered cell last (so it renders on top)
-  for (let pass = 0; pass < 2; pass++) {
+  // For tiny cells skip 2-pass z-order (imperceptible at ≤5px, halves iteration count)
+  const _tinyCell = _CW <= 5;
+  const _passes = _tinyCell ? 1 : 2;
+  for (let pass = 0; pass < _passes; pass++) {
     for (let i = 0; i < total; i++) {
-      const isHover = (i === _mapHoverIdx);
-      if (pass === 0 && isHover) continue;  // skip hovered on first pass
-      if (pass === 1 && !isHover) continue; // only hovered on second pass
+      const isHover = !_tinyCell && (i === _mapHoverIdx);
+      if (!_tinyCell && pass === 0 && isHover) continue;
+      if (!_tinyCell && pass === 1 && !isHover) continue;
 
       const d   = _mapSorted[i];
       const col = i % _cols;
@@ -1443,23 +1670,27 @@ function drawMapCanvas(inRangeSet, inScopeSet) {
 function updateMapDimming(filtered) {
   if (!_mapCanvas || _mapSorted.length===0) return;
   const inRangeSet = new Set(filtered.map(d=>d.id));
-  const scoped = applyScope(filtered);
-  const inScopeSet = new Set(scoped.map(d=>d.id));
+  // When a legend type filter is active, bypass scope so the filtered type is always visible
+  const scopeBase = legendTypeFilter && legendTypeFilter !== 'converted' && legendTypeFilter !== 'top10'
+    ? filtered
+    : applyScope(filtered);
+  const inScopeSet = new Set(scopeBase.map(d=>d.id));
   drawMapCanvas(inRangeSet, inScopeSet);
 
   // Update counter
-  const own = scoped.filter(d=>d.is_own).length;
-  const oth = scoped.length - own;
+  const own = scopeBase.filter(d=>d.is_own).length;
+  const oth = scopeBase.length - own;
   const mapCounter = document.getElementById('mapCounter');
   if (mapCounter) {
-    mapCounter.innerHTML = `${scoped.length} notes${own>0?` <span style="color:var(--amber)">${own} yours</span> ${oth} restacks`:''}${legendTypeFilter ? ` <span style="color:var(--amber)">▸ ${legendTypeFilter}</span>` : ''}`;
+    mapCounter.innerHTML = `${scopeBase.length} notes${own>0?` <span style="color:var(--amber)">${own} yours</span> ${oth} restacks`:''}${legendTypeFilter ? ` <span style="color:var(--amber)">▸ ${legendTypeFilter}</span>` : ''}`;
   }
 }
 
-
-
 function renderChart(filtered){
   const canvas = document.getElementById('chartCanvas');
+  // Resize canvas buffer only when display width changes (avoids layout reflow)
+  const dispW = canvas.parentElement ? canvas.parentElement.clientWidth : 1100;
+  if (dispW > 100 && canvas.width !== dispW) canvas.width = dispW;
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
   ctx.clearRect(0,0,W,H);
@@ -1530,9 +1761,7 @@ function renderChart(filtered){
       if(!started){ctx.moveTo(x,ly);started=true;}else ctx.lineTo(x,ly);
     });
     ctx.stroke(); ctx.setLineDash([]);
-    // Label
-    ctx.fillStyle='rgba(232,103,122,0.8)'; ctx.font='10px DejaVu Sans Mono,monospace'; ctx.textAlign='right';
-    ctx.fillText('avg ♥/note', W-padR, padT+12);
+    // individual label removed — shared legend drawn below
   }
   ctx.lineWidth=1;
 
@@ -1542,6 +1771,40 @@ function renderChart(filtered){
   const totalNotes = filtered.length;
   const peak = full.reduce((best,k)=>{ const v=(byMonth[k]?byMonth[k].own+byMonth[k].other:0); return v>best.v?{k,v}:best; }, {k:null,v:-1});
   const topEngMonth = ownMonths.length ? ownMonths.reduce((best,k)=>{const v=byMonth[k];const e=(v.likes+v.restacks*2);return e>best.e?{k,e,v}:best;},{k:null,e:-1,v:null}) : null;
+
+  // 3-month rolling average overlay
+  if (full.length >= 3) {
+    const rollAvg = full.map((_,i) => {
+      const w = full.slice(Math.max(0,i-2), i+1);
+      return w.reduce((s,k)=>s+(byMonth[k]?(byMonth[k].own+byMonth[k].other):0),0) / w.length;
+    });
+    ctx.save();
+    ctx.strokeStyle='rgba(79,209,197,0.75)'; ctx.lineWidth=2; ctx.setLineDash([5,3]);
+    ctx.beginPath();
+    full.forEach((key,i)=>{
+      const x=padL+i*gap+gap/2, y=H-padB-(rollAvg[i]/maxVal)*plotH;
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    });
+    ctx.stroke(); ctx.setLineDash([]);
+    ctx.restore();
+  }
+
+  // Dashed-line legend injected below the canvas as DOM (no canvas overlap)
+  {
+    const legEl = document.getElementById('chartLineLegend');
+    if (legEl) {
+      const parts = [];
+      if (ownMonths.length > 1)
+        parts.push(`<span style="display:inline-flex;align-items:center;gap:6px;margin-right:18px">
+          <svg width="22" height="10" style="flex-shrink:0"><line x1="0" y1="5" x2="22" y2="5" stroke="rgba(232,103,122,0.85)" stroke-width="1.5" stroke-dasharray="3,3"/></svg>
+          <span style="font-family:monospace;font-size:11px;color:#9AABB8">avg ♥/note</span></span>`);
+      if (full.length >= 3)
+        parts.push(`<span style="display:inline-flex;align-items:center;gap:6px;margin-right:18px">
+          <svg width="22" height="10" style="flex-shrink:0"><line x1="0" y1="5" x2="22" y2="5" stroke="rgba(79,209,197,0.8)" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
+          <span style="font-family:monospace;font-size:11px;color:#9AABB8">3-mo avg</span></span>`);
+      legEl.innerHTML = parts.join('');
+    }
+  }
   document.getElementById('chartCaption').innerHTML = peak.k ?
     `Peak: <b>${peak.k}</b> with <b>${peak.v}</b> notes.` +
     (topEngMonth&&topEngMonth.k ? ` Best engagement month: <b>${topEngMonth.k}</b> — ♥ ${topEngMonth.v.likes} likes · ↻ ${topEngMonth.v.restacks} restacks · 💬 ${topEngMonth.v.comments} comments.` : '') +
@@ -1553,15 +1816,26 @@ function renderBoards(filtered) {
   const own    = filtered.filter(d=>d.is_own).sort((a,b)=>b.likes-a.likes).slice(0, LIMIT);
   const others = filtered.filter(d=>!d.is_own).sort((a,b)=>b.likes-a.likes).slice(0, LIMIT);
 
+  const MEDALS = ['🥇','🥈','🥉'];
+
   function cardHtml(d, i, mineClass){
     const preview = d.body && d.body.length>140 ? d.body.slice(0,140)+'…' : (d.body||'(media only)');
+    const rank = i < 3 ? `<span class="card-medal">${MEDALS[i]}</span>` : `<span class="card-rank">#${i+1}</span>`;
+    const ratio = d.clicks > 0 && d.likes > 0 ? (d.clicks / d.likes).toFixed(1) : null;
+    const convBadge = d.converted ? `<span class="badge-conv">${d.free_subs+d.paid_subs} sub${d.free_subs+d.paid_subs>1?'s':''}</span>` : '';
     return `<a class="card" href="${d.link}" target="_blank">
-      <div class="card-meta"><span class="card-rank">#${i+1}</span>${d.date.slice(0,10)} · <span class="card-author ${mineClass}">${d.is_own?'You':d.author}</span>
-      ${d.converted?`<span class="badge-conv">${d.free_subs+d.paid_subs} sub${d.free_subs+d.paid_subs>1?'s':''}</span>`:''}</div>
+      <div class="card-meta">${rank}${d.date.slice(0,10)} · <span class="card-author ${mineClass}">${d.is_own?'You':d.author}</span>${convBadge}</div>
       <div class="card-body">${preview.replace(/</g,'&lt;')}</div>
-      <div class="card-stats"><span style="color:var(--rose)">♥ ${d.likes}</span><span style="color:var(--cyan)">↻ ${d.restacks}</span><span style="color:var(--amber)">💬 ${d.comments}</span></div>
+      <div class="card-stats">
+        <span style="color:var(--rose)">♥ ${d.likes}</span>
+        <span style="color:var(--cyan)">↻ ${d.restacks}</span>
+        <span style="color:var(--amber)">💬 ${d.comments}</span>
+        ${d.clicks ? `<span style="color:#A78BFA">👆 ${d.clicks}</span>` : ''}
+        ${ratio ? `<span style="color:var(--dim)" data-tip="clicks per like">⚡ ${ratio}x</span>` : ''}
+      </div>
     </a>`;
   }
+
   const ownEl = document.getElementById('boardOwn');
   const othEl = document.getElementById('boardOthers');
 
@@ -1573,7 +1847,6 @@ function renderBoards(filtered) {
     ? others.map((d,i)=>cardHtml(d,i,'')).join('')
     : '<div class="caption">No restacks from others in this period.</div>';
 }
-
 
 function renderConversions(filtered){
   const conv = filtered.filter(d=>d.converted).sort((a,b)=>a.ts-b.ts);
@@ -1619,8 +1892,8 @@ function renderGrowthFunnel(filtered) {
   const mK = Object.keys(byM).sort();
   if (!mK.length) return;
 
-  const maxStack = Math.max(...mK.map(k => byM[k].free + byM[k].paid + byM[k].follows), 1);
-  const maxNotes = Math.max(...mK.map(k => byM[k].notes), 1);
+  const maxStack = Math.max(mK.reduce((m,k)=>{const s=byM[k].free+byM[k].paid+byM[k].follows;return s>m?s:m;},0),1);
+  const maxNotes = Math.max(mK.reduce((m,k)=>byM[k].notes>m?byM[k].notes:m,0),1);
   const bgp = pW / mK.length;
   const bw  = Math.min(bgp * 0.6, 30);
 
@@ -1685,18 +1958,59 @@ function renderGrowthFunnel(filtered) {
       ctx.fillText(mm === '01' ? yr : k.slice(2), PAD_L + i * bgp + bgp / 2, PAD_T + pH + 5);
   });
 
-  // Legend — below x-axis
-  const items = [['#E8A33D','Paid subs'],['#5FBF73','Free subs'],['#4FD1C5','Follows (note-attributed)'],['rgba(215,222,230,0.5)','Notes/mo (line)']];
+  // Legend — below x-axis (bars + line swatches)
   const legY = PAD_T + pH + 28;
-  items.forEach(([c, label], i) => {
-    const lx = PAD_L + i * 175;
-    ctx.fillStyle = c; ctx.fillRect(lx, legY - 5, 10, 10);
+  const barItems = [['#E8A33D','Paid subs'],['#5FBF73','Free subs'],['#4FD1C5','Follows (note-attr.)']];
+  barItems.forEach(([col, label], i) => {
+    const lx = PAD_L + i * 160;
+    ctx.fillStyle = col; ctx.fillRect(lx, legY - 5, 10, 10);
     ctx.fillStyle = '#9AABB8'; ctx.font = '10px monospace';
     ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     ctx.fillText(label, lx + 14, legY);
   });
+  // Line swatches for dashed lines
+  const lineItems = [
+    ['rgba(215,222,230,0.6)', [4,4], 'Notes/mo (this scale)'],
+    ['rgba(95,191,115,0.85)', [4,3], 'Cumul. subs (right axis)']
+  ];
+  lineItems.forEach(([col, dash, label], i) => {
+    const lx = PAD_L + (barItems.length + i) * 160;
+    ctx.save();
+    ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.setLineDash(dash);
+    ctx.beginPath(); ctx.moveTo(lx, legY); ctx.lineTo(lx + 18, legY); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+    ctx.fillStyle = '#9AABB8'; ctx.font = '10px monospace';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText(label, lx + 22, legY);
+  });
 
   // Caption
+
+  // Cumulative line overlay
+  {
+    let cum=0;
+    const cumPts=mK.map(k=>{cum+=byM[k].free+byM[k].paid+byM[k].follows;return cum;});
+    const maxCum=Math.max(cumPts[cumPts.length-1]||1,1);
+    ctx.save();
+    ctx.strokeStyle='rgba(95,191,115,0.85)'; ctx.lineWidth=2; ctx.setLineDash([4,3]);
+    ctx.beginPath();
+    cumPts.forEach((v,i)=>{
+      const cx=PAD_L+i*bgp+bgp/2, cy=PAD_T+pH-(v/maxCum)*pH*0.82;
+      i===0?ctx.moveTo(cx,cy):ctx.lineTo(cx,cy);
+    });
+    ctx.stroke(); ctx.setLineDash([]);
+    // Peak value annotation at end of cumulative line
+    const lastCumVal = cumPts[cumPts.length-1]||0;
+    if (lastCumVal > 0) {
+      const lastCX = PAD_L + (mK.length-1)*bgp + bgp/2;
+      const lastCY = PAD_T + pH - (lastCumVal/maxCum)*pH*0.82;
+      ctx.fillStyle='rgba(95,191,115,0.85)'; ctx.font='bold 10px monospace';
+      ctx.textAlign='left'; ctx.textBaseline='middle';
+      ctx.fillText(lastCumVal, lastCX+6, lastCY);
+    }
+    ctx.restore();
+  }
   const totFree    = Object.values(byM).reduce((s,v) => s + v.free, 0);
   const totPaid    = Object.values(byM).reduce((s,v) => s + v.paid, 0);
   const totFollows = Object.values(byM).reduce((s,v) => s + v.follows, 0);
@@ -1737,9 +2051,11 @@ function renderScatter(filtered) {
 
   const rawLikes  = own.map(d => d.likes);
   const rawClicks = own.map(d => d.clicks);
-  const maxLikes  = useLog ? logSafe(Math.max(...rawLikes,  1)) : Math.max(...rawLikes,  1);
-  const maxClicks = useLog ? logSafe(Math.max(...rawClicks, 1)) : Math.max(...rawClicks, 1);
-  const maxRestacks = Math.max(...own.map(d => d.restacks), 1);
+  const _mxL=rawLikes.reduce((m,v)=>v>m?v:m,0);
+  const maxLikes  = useLog ? logSafe(Math.max(_mxL,1)) : Math.max(_mxL,1);
+  const _mxC=rawClicks.reduce((m,v)=>v>m?v:m,0);
+  const maxClicks = useLog ? logSafe(Math.max(_mxC,1)) : Math.max(_mxC,1);
+  const maxRestacks = Math.max(own.reduce((m,d)=>d.restacks>m?d.restacks:m,0), 1);
 
   function toX(likes)  { return PAD_L + (useLog ? logSafe(likes)  / maxLikes  : likes  / maxLikes)  * pW; }
   function toY(clicks) { return PAD_T + pH - (useLog ? logSafe(clicks) / maxClicks : clicks / maxClicks) * pH; }
@@ -1827,6 +2143,26 @@ function renderScatter(filtered) {
     }
     nodes.push({x, y, r, d, ratio, rating});
   });
+
+  // regression line drawn below via raw-value OLS (see lines after snodes)
+  // ── Top-performer quadrant — DATA-DRIVEN median crosshairs ──
+  {
+    // Compute median X and Y from actual node pixel positions
+    const xs=[...nodes.map(n=>n.x)].sort((a,b)=>a-b);
+    const ys=[...nodes.map(n=>n.y)].sort((a,b)=>a-b);
+    const medX=xs[Math.floor(xs.length*0.7)]; // 70th pct: upper-right quadrant is "top 30%"
+    const medY=ys[Math.floor(ys.length*0.3)]; // lower Y = higher on canvas
+    if (medX>PAD_L && medX<PAD_L+pW && medY>PAD_T && medY<PAD_T+pH) {
+      ctx.save();
+      ctx.strokeStyle='rgba(232,163,61,0.25)'; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+      ctx.beginPath();
+      ctx.moveTo(medX,PAD_T); ctx.lineTo(medX,PAD_T+pH);
+      ctx.moveTo(PAD_L,medY); ctx.lineTo(PAD_L+pW,medY);
+      ctx.stroke(); ctx.setLineDash([]);
+      // quadrant labels moved to DOM below chart
+      ctx.restore();
+    }
+  }
   canvas.__snodes = nodes;
 
   // Trend line (linear on raw values regardless of scale)
@@ -1846,32 +2182,221 @@ function renderScatter(filtered) {
   ctx.lineTo(toX(maxRawLikes), toY(Math.min(Math.max(slope*maxRawLikes+intercept, 0), maxRawClicks)));
   ctx.stroke(); ctx.setLineDash([]);
 
-  // Legend below x-axis
+  // Canvas dot-type legend (bubble types)
   const legItems = [['#E8A33D','Original Note'],['#4FD1C5','Curated Share'],['#5FBF73','Own Post Promo']];
   const scLegY = PAD_T + pH + 32;
-  legItems.forEach(([c, label], i) => {
+  legItems.forEach(([col, label], i) => {
     const lx = PAD_L + i * 220;
     ctx.beginPath(); ctx.arc(lx+6, scLegY, 6, 0, Math.PI*2);
-    ctx.fillStyle = hexAlpha(c, 0.7); ctx.strokeStyle = c; ctx.lineWidth = 1.5;
+    ctx.fillStyle = hexAlpha(col, 0.7); ctx.strokeStyle = col; ctx.lineWidth = 1.5;
     ctx.fill(); ctx.stroke();
     ctx.fillStyle = '#9AABB8'; ctx.font = '11px monospace';
     ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     ctx.fillText(label, lx+16, scLegY);
   });
+
+  // Inject line-type legend + TOP PERFORMERS note into DOM below chart
+  const scLineLeg = document.getElementById('scatterLineLegend');
+  if (scLineLeg) {
+    scLineLeg.innerHTML =
+      `<span style="display:inline-flex;align-items:center;gap:6px;margin-right:20px">
+        <svg width="22" height="10" style="flex-shrink:0"><line x1="0" y1="5" x2="22" y2="5" stroke="rgba(232,163,61,0.5)" stroke-width="1.5" stroke-dasharray="5,5"/></svg>
+        <span style="font-family:monospace;font-size:11px;color:#9AABB8">regression (clicks vs likes)</span></span>` +
+      `<span style="display:inline-flex;align-items:center;gap:6px;margin-right:20px">
+        <svg width="22" height="10" style="flex-shrink:0">
+          <line x1="0" y1="5" x2="10" y2="5" stroke="rgba(232,163,61,0.25)" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="11" y1="0" x2="11" y2="10" stroke="rgba(232,163,61,0.25)" stroke-width="1" stroke-dasharray="3,3"/>
+        </svg>
+        <span style="font-family:monospace;font-size:11px;color:#9AABB8">top 30% quadrant (data-driven)</span></span>`;
+  }
 }
 
+function renderHeatmap(filtered) {
+  const wrap = document.getElementById('heatmapWrap');
+  if (!wrap) return;
+  const own = filtered.filter(d => d.is_own && d.likes > 0);
+  if (own.length < 5) {
+    wrap.innerHTML = '<div class="caption">Not enough data — need ≥5 own notes with likes.</div>';
+    document.getElementById('heatmapCaption').textContent = '';
+    return;
+  }
+  const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const grid = Array.from({length:7}, ()=>Array.from({length:24},()=>({sum:0,count:0})));
+  own.forEach(d => {
+    const dt=new Date(d.date), dow=dt.getDay(), hr=dt.getHours();
+    grid[dow][hr].sum += d.likes; grid[dow][hr].count++;
+  });
 
+  // Build sorted avg list for percentile-based threshold
+  const avgs = [];
+  for(let d=0;d<7;d++) for(let h=0;h<24;h++)
+    if(grid[d][h].count>0) avgs.push(grid[d][h].sum/grid[d][h].count);
+  avgs.sort((a,b)=>a-b);
+  const maxAvg = avgs[avgs.length-1] || 1;
+  const p50 = avgs[Math.floor(avgs.length*0.5)] || 1;
+  const p75 = avgs[Math.floor(avgs.length*0.75)] || 1;
+  const p90 = avgs[Math.floor(avgs.length*0.9)] || 1;
+
+  // Color: empty=dark, low=dim teal, mid=amber, top25%=gold, top10%=bright gold+glow
+  function cellStyle(avg, count) {
+    if (!count) return {bg:'#0D1118', border:'none', cls:''};
+    const t = avg / maxAvg;
+    if (avg >= p90) return {bg:'#E8A33D', border:'2px solid #F4C06B', cls:'hm-top'};
+    if (avg >= p75) return {bg:'rgba(232,163,61,0.75)', border:'1px solid rgba(232,163,61,0.4)', cls:''};
+    if (avg >= p50) return {bg:'rgba(217,184,100,0.4)', border:'none', cls:''};
+    return {bg:'rgba(79,209,197,0.2)', border:'none', cls:''};
+  }
+
+  // Find global best for annotation
+  let bestDow=0,bestHr=0,bestAvg=0,bestCount=0;
+  for(let d=0;d<7;d++) for(let h=0;h<24;h++)
+    if(grid[d][h].count>0 && grid[d][h].sum/grid[d][h].count > bestAvg) {
+      bestAvg=grid[d][h].sum/grid[d][h].count; bestDow=d; bestHr=h; bestCount=grid[d][h].count;
+    }
+
+  // Top-5 slots for annotation
+  const ranked = [];
+  for(let d=0;d<7;d++) for(let h=0;h<24;h++)
+    if(grid[d][h].count>0) ranked.push({d,h,avg:grid[d][h].sum/grid[d][h].count,count:grid[d][h].count});
+  ranked.sort((a,b)=>b.avg-a.avg);
+  const top5 = ranked.slice(0,5);
+
+  let html = '<div class="heatmap-grid"><div class="heatmap-empty"></div>';
+  for(let h=0;h<24;h++) html+=`<div class="heatmap-hlabel">${h}</div>`;
+  for(let d=0;d<7;d++){
+    html+=`<div class="heatmap-label">${DOW[d]}</div>`;
+    for(let h=0;h<24;h++){
+      const {sum,count}=grid[d][h], avg=count?sum/count:0;
+      const {bg,border,cls}=cellStyle(avg,count);
+      const isTop = top5.some(t=>t.d===d&&t.h===h);
+      const rank  = top5.findIndex(t=>t.d===d&&t.h===h)+1;
+      const tip = count
+        ? `${DOW[d]} ${h}:00 — avg ${avg.toFixed(1)} likes (${count} note${count>1?'s':''})`
+        : `${DOW[d]} ${h}:00 — no data`;
+      const rankLabel = isTop ? `<span style="font-size:8px;line-height:1;color:rgba(0,0,0,0.7);font-weight:bold">${rank}</span>` : '';
+      const bStyle = border!=='none'?`border:${border};`:'';
+      html+=`<div class="heatmap-cell${isTop?' hm-top':''}" style="background:${bg};${bStyle}box-sizing:border-box;display:flex;align-items:center;justify-content:center;" data-tip="${tip}">${rankLabel}</div>`;
+    }
+  }
+  html += '</div>';
+
+  // Legend row
+  html += `<div style="display:flex;align-items:center;gap:18px;margin-top:10px;font-family:monospace;font-size:11px;color:var(--dim);flex-wrap:wrap">
+    <span><span style="display:inline-block;width:12px;height:12px;background:#0D1118;border:1px solid #232E3D;border-radius:2px;vertical-align:middle;margin-right:4px"></span>no data</span>
+    <span><span style="display:inline-block;width:12px;height:12px;background:rgba(79,209,197,0.2);border-radius:2px;vertical-align:middle;margin-right:4px"></span>below median</span>
+    <span><span style="display:inline-block;width:12px;height:12px;background:rgba(217,184,100,0.4);border-radius:2px;vertical-align:middle;margin-right:4px"></span>top 50%</span>
+    <span><span style="display:inline-block;width:12px;height:12px;background:rgba(232,163,61,0.75);border-radius:2px;vertical-align:middle;margin-right:4px"></span>top 25%</span>
+    <span><span style="display:inline-block;width:12px;height:12px;background:#E8A33D;border:2px solid #F4C06B;border-radius:2px;vertical-align:middle;margin-right:4px;box-sizing:border-box"></span><b style="color:var(--amber)">top 10% — best slots</b> (ranked 1–5 shown)</span>
+  </div>
+
+  <div style="margin-top:14px;font-family:monospace;font-size:12px">
+    <span style="color:var(--dim);letter-spacing:2px;font-size:10px">TOP 5 SLOTS</span><br>
+    ${top5.map((s,i)=>`<span style="display:inline-block;margin:4px 14px 4px 0;color:var(--amber)"><b>#${i+1}</b> ${DOW[s.d]} ${s.h}:00 — <b>${s.avg.toFixed(1)}</b> avg likes (${s.count} note${s.count>1?'s':''})</span>`).join('')}
+  </div>`;
+
+  wrap.innerHTML = html;
+
+  // data-tip tooltips handled by global handler (see _initGlobalTip)
+
+  const cap = document.getElementById('heatmapCaption');
+  if(cap) cap.innerHTML = `<b style="color:var(--amber)">${DOW[bestDow]} ${bestHr}:00</b> is your best slot — avg <b>${bestAvg.toFixed(1)} likes/note</b> (${bestCount} note${bestCount>1?'s':''}). <b style="color:var(--amber)">Bright amber = best times.</b> Numbers 1–5 = rank. Timestamps are UTC from the export — adjust ±1–2h for your local timezone.`;
+}
+
+function renderDecay(filtered) {
+  const wrap = document.getElementById('decayCanvas');
+  if (!wrap) return;
+
+  const own = filtered.filter(d => d.is_own && (d.likes > 0 || d.clicks > 0))
+    .sort((a,b) => b.likes - a.likes).slice(0, 20);
+
+  if (own.length < 3) {
+    wrap.outerHTML = '<div id="decayCanvas" class="caption" style="padding:18px;">Not enough data — need at least 3 own notes with likes.</div>';
+    return;
+  }
+
+  const maxLikes   = own.reduce((m,d)=>d.likes>m?d.likes:m, 1);
+  const maxClicks  = own.reduce((m,d)=>d.clicks>m?d.clicks:m, 1);
+  const maxRest    = own.reduce((m,d)=>d.restacks>m?d.restacks:m, 1);
+
+  const rows = own.map((d, i) => {
+    const ratio = d.likes > 0 ? (d.clicks / d.likes).toFixed(1) : '—';
+    const pctLikes   = Math.round(d.likes   / maxLikes  * 100);
+    const pctClicks  = Math.round(d.clicks  / maxClicks * 100);
+    const pctRest    = Math.round(d.restacks/ maxRest   * 100);
+    const preview = (d.body||'').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim().slice(0,80) || d.date.slice(0,10);
+    const url = d.url || (d.handle ? `https://substack.com/@${d.handle}/note/${d.id}` : '#');
+    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':`<span style="color:var(--dim);font-family:monospace;font-size:11px">#${i+1}</span>`;
+    return `<tr>
+      <td style="width:28px;text-align:center;padding:6px 4px">${medal}</td>
+      <td style="max-width:320px;padding:6px 8px;font-size:13px;line-height:1.4">
+        <a href="${url}" target="_blank" style="color:var(--text);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.1)"
+           onmouseover="this.style.borderColor='var(--amber)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'"
+        >${preview}${(d.body||'').replace(/<[^>]+>/g,'').length > 80 ? '…' : ''}</a>
+        <span style="display:block;color:var(--dim);font-family:monospace;font-size:10px;margin-top:2px">${d.date ? d.date.slice(0,10) : ''} · ${d.type||'Original Note'}</span>
+      </td>
+      <td style="padding:6px 8px;white-space:nowrap">
+        <span style="color:var(--amber);font-family:monospace;font-weight:bold">${d.likes}</span>
+        <div style="margin-top:3px;height:4px;border-radius:2px;background:#1A2030;width:80px">
+          <div style="height:4px;border-radius:2px;background:var(--amber);width:${pctLikes}%"></div></div>
+      </td>
+      <td style="padding:6px 8px;white-space:nowrap">
+        <span style="color:var(--cyan);font-family:monospace">${d.clicks||0}</span>
+        <div style="margin-top:3px;height:4px;border-radius:2px;background:#1A2030;width:60px">
+          <div style="height:4px;border-radius:2px;background:var(--cyan);width:${pctClicks}%"></div></div>
+      </td>
+      <td style="padding:6px 8px;white-space:nowrap">
+        <span style="color:var(--green);font-family:monospace">${d.restacks||0}</span>
+        <div style="margin-top:3px;height:4px;border-radius:2px;background:#1A2030;width:44px">
+          <div style="height:4px;border-radius:2px;background:var(--green);width:${pctRest}%"></div></div>
+      </td>
+      <td style="padding:6px 8px;text-align:right;font-family:monospace;font-size:12px;color:${parseFloat(ratio)>2?'var(--green)':parseFloat(ratio)>1?'var(--amber)':'var(--dim)'}">${ratio}×</td>
+    </tr>`;
+  }).join('');
+
+  const tableHtml = `
+    <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse">
+      <thead>
+        <tr style="border-bottom:1px solid var(--panel-border)">
+          <th style="width:28px"></th>
+          <th style="text-align:left;padding:4px 8px;font-family:monospace;font-size:11px;letter-spacing:1.5px;color:var(--dim);font-weight:normal">NOTE</th>
+          <th style="text-align:left;padding:4px 8px;font-family:monospace;font-size:11px;letter-spacing:1.5px;color:var(--amber);font-weight:normal">LIKES</th>
+          <th style="text-align:left;padding:4px 8px;font-family:monospace;font-size:11px;letter-spacing:1.5px;color:var(--cyan);font-weight:normal">CLICKS</th>
+          <th style="text-align:left;padding:4px 8px;font-family:monospace;font-size:11px;letter-spacing:1.5px;color:var(--green);font-weight:normal">RESTACKS</th>
+          <th style="text-align:right;padding:4px 8px;font-family:monospace;font-size:11px;letter-spacing:1.5px;color:var(--dim);font-weight:normal" data-tip="clicks ÷ likes — how well engagement converted to traffic">CLICK/LIKE</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    </div>`;
+
+  // Replace the canvas with a div for the table
+  const existing = document.getElementById('decayCanvas');
+  if (existing) {
+    const div = document.createElement('div');
+    div.id = 'decayCanvas';
+    existing.parentNode.replaceChild(div, existing);
+  }
+  const container = document.getElementById('decayCanvas');
+  if (container) container.innerHTML = tableHtml;
+
+  const cap = document.getElementById('decayCaption');
+  if (cap) cap.innerHTML = `Top ${own.length} notes by likes in selected period. <b>Click/like ratio</b>: clicks ÷ likes — how well engagement converted to actual traffic. <span style="color:var(--green)">Green</span> = &gt;2× · <span style="color:var(--amber)">amber</span> = 1–2× · grey = &lt;1×.`;
+}
 
 function render(){
   const filtered = dateFiltered();
   const scoped = applyScope(filtered);
   renderKPIs(scoped);
   updateMapDimming(filtered);
-  renderChart(filtered);
-  try { renderGrowthFunnel(filtered); } catch(e){ console.error("renderGrowthFunnel:",e); }
-  try { renderScatter(filtered); } catch(e){ console.error("renderScatter:",e); }
-  renderBoards(filtered);
-  renderConversions(filtered);
+  renderChart(scoped);
+  try { renderGrowthFunnel(scoped); } catch(e){ console.error("renderGrowthFunnel:",e); }
+  try { renderScatter(scoped); } catch(e){ console.error("renderScatter:",e); }
+  renderBoards(scoped);
+  renderConversions(scoped);
+  try{renderHeatmap(scoped);}catch(e){console.error("renderHeatmap:",e);}
+  buildNetwork(scoped);
+  renderNetwork();
 }
 
 document.querySelectorAll('[data-scope]').forEach(btn=>{
@@ -1902,6 +2427,9 @@ function roundRect(ctx,x,y,w,h,r){
 }
 
 function generateHero(){
+  // Respect current scope + period filters
+  const _ghFiltered = dateFiltered();
+  const _ghScoped   = applyScope(_ghFiltered);
   const W=1200, PAD=54, GAP=16, SECGAP=20;
   const H_HEAD=130, H_KPI3=90, H_KPI4=82, H_MAP=400, H_ACT=230, H_NET=310, H_CARDS=200, H_FOOT=48;
   const H = H_HEAD+H_KPI3+H_KPI4+H_MAP+H_ACT+H_NET+H_CARDS+H_FOOT + SECGAP*8 + 16;
@@ -1934,24 +2462,18 @@ function generateHero(){
   y+=22;
   ctx.fillStyle='#5B6573';ctx.font='13px sans-serif';
   const handle=(document.getElementById('handleInput')||{value:''}).value.trim()||'your account';
-  const minD=new Date(Math.min(...DATA.map(d=>d.ts))).toISOString().slice(0,10);
-  const maxD=new Date(NOW_TS||Date.now()).toISOString().slice(0,10);
+  const minD=new Date(_ghFiltered.reduce((m,d)=>d.ts<m?d.ts:m,Infinity)).toISOString().slice(0,10);
+  const maxD=new Date(_ghFiltered.reduce((m,d)=>d.ts>m?d.ts:m,0)).toISOString().slice(0,10);
   ctx.fillText('@'+handle+(PUB_NAME?'  ·  '+PUB_NAME:'')+'  ·  '+minD+' → '+maxD,PAD,y);
   y+=12;divider(y);y+=SECGAP;
 
   // ── KPI DATA — identical formulas to renderKPIs() ──────────────────────────
-  // Use INDEX.totals if available (pre-computed), else single pass
+  // Always compute from filtered+scoped data (never use INDEX.totals — it ignores filters)
   let _likes=0,_rest=0,_comm=0,_clicks=0,_free=0,_paid=0,_arr=0;
-  if(INDEX){
-    const t=INDEX.totals;
-    _likes=t.likes; _rest=t.restacks; _comm=t.comments; _clicks=t.clicks;
-    _free=t.freeSubs; _paid=t.paidSubs; _arr=t.arr;
-  } else {
-    for(const d of DATA){ _likes+=d.likes||0; _rest+=d.restacks||0; _comm+=d.comments||0; _clicks+=d.clicks||0; _free+=d.free_subs||0; _paid+=d.paid_subs||0; _arr+=d.arr||0; }
-  }
-  const _own   = INDEX ? INDEX.ownNotes : DATA.filter(d=>d.is_own);
+  for(const d of _ghScoped){ _likes+=d.likes||0; _rest+=d.restacks||0; _comm+=d.comments||0; _clicks+=d.clicks||0; _free+=d.free_subs||0; _paid+=d.paid_subs||0; _arr+=d.arr||0; }
+  const _own   = _ghScoped.filter(d=>d.is_own);
   const _nOwn  = _own.length;
-  const _notes = DATA.length;
+  const _notes = _ghScoped.length;
   const _subs  = _free + _paid;
   // 1. Engagement/note: (likes+restacks+comments) / own notes
   const _eng   = _nOwn>0 ? ((_likes+_rest+_comm)/_nOwn).toFixed(1) : '0.0';
@@ -1991,7 +2513,7 @@ function generateHero(){
   ctx.fillStyle='#121826';rr(PAD,y,W-PAD*2,MAP_IH,12);ctx.fill();
   ctx.strokeStyle='#232E3D';ctx.lineWidth=1;ctx.stroke();
 
-  const sorted=[...DATA].sort((a,b)=>a.ts-b.ts);
+  const sorted=[..._ghScoped].sort((a,b)=>a.ts-b.ts);
   const total=sorted.length;
   const ownNS=sorted.filter(d=>d.is_own).sort((a,b)=>noteScore(b)-noteScore(a));
   const top10Cut=Math.max(1,Math.ceil(ownNS.length*0.1));
@@ -2047,7 +2569,7 @@ function generateHero(){
   });
 
   // Caption bottom-right
-  const ownN2=DATA.filter(d=>d.is_own).length;
+  const ownN2=_ghScoped.filter(d=>d.is_own).length;
   ctx.fillStyle='#5B6573';ctx.font='9px monospace';ctx.textAlign='right';ctx.textBaseline='alphabetic';
   ctx.fillText('Showing '+total+' notes — '+ownN2+' yours, '+(total-ownN2)+' from others.',W-PAD-16,y+MAP_IH-8);
   ctx.textAlign='left';
@@ -2058,7 +2580,7 @@ function generateHero(){
   ctx.fillStyle='#121826';rr(PAD,y,W-PAD*2,H_ACT-10,12);ctx.fill();
   ctx.strokeStyle='#232E3D';ctx.lineWidth=1;ctx.stroke();
   const bMon={};
-  DATA.forEach(d=>{const ym=d.date.slice(0,7);if(!bMon[ym])bMon[ym]={own:0,other:0,likes:0};d.is_own?(bMon[ym].own++,bMon[ym].likes+=(d.likes||0)):bMon[ym].other++;});
+  _ghScoped.forEach(d=>{const ym=d.date.slice(0,7);if(!bMon[ym])bMon[ym]={own:0,other:0,likes:0};d.is_own?(bMon[ym].own++,bMon[ym].likes+=(d.likes||0)):bMon[ym].other++;});
   const mK=Object.keys(bMon).sort();
   const pX=PAD+36,pW=W-PAD*2-60,pH=H_ACT-52,pY=y+12;
   const mxV=Math.max(...mK.map(k=>bMon[k].own+bMon[k].other),1);
@@ -2118,8 +2640,8 @@ function generateHero(){
 
   // ── PEAK SIGNAL ──
   sectionLabel('PEAK SIGNAL — two kinds of "best note"',y);y+=14;
-  const oT=DATA.filter(d=>d.is_own).sort((a,b)=>b.likes-a.likes)[0];
-  const rT=DATA.filter(d=>!d.is_own).sort((a,b)=>b.likes-a.likes)[0];
+  const oT=_ghScoped.filter(d=>d.is_own).sort((a,b)=>b.likes-a.likes)[0];
+  const rT=_ghScoped.filter(d=>!d.is_own).sort((a,b)=>b.likes-a.likes)[0];
   const cW=(W-PAD*2-GAP)/2, cH=H_CARDS-8;
   [[oT,'★ TOP NOTE — MINE','#E8A33D',PAD],[rT,'↻ TOP RESTACK — NOT MINE','#4FD1C5',PAD+cW+GAP]].forEach(([note,label,color,cx])=>{
     ctx.fillStyle='#121826';rr(cx,y,cW,cH,12);ctx.fill();
@@ -2176,7 +2698,6 @@ document.getElementById('genHeroBtn').addEventListener('click', ()=>{
     alert('Hero image generation failed: ' + err.message);
   }
 });
-
 
 // ═══════════════════════════════════════════════════════════════════════════
 // IndexedDB — "Notes Explorer" database, one object-store per handle
@@ -2342,7 +2863,7 @@ async function idbActivateHandle(handle) {
   DATA      = (cached.items || []).filter(d => d && d.id != null);
   if (!DATA.length) return false;
   AUTHOR_ID = cached.meta.author_id;
-  NOW_TS    = Math.max(...DATA.map(d => d.ts || 0));
+  NOW_TS    = DATA.reduce((m,d)=>(d.ts||0)>m?(d.ts||0):m, 0);
   const pub = cached.meta.publication;
   PUB_NAME      = (pub && pub.name)      || null;
   PUB_SUBDOMAIN = (pub && pub.subdomain) || null;
@@ -2363,7 +2884,7 @@ async function idbActivateHandle(handle) {
   const byline = document.getElementById('bylineText');
   if (byline) {
     const syncDate = new Date(cached.meta.last_synced).toISOString().slice(0,10);
-    byline.innerHTML += ` <span style="color:var(--dim);font-size:12px;font-family:monospace;">[cached ${syncDate} — drop a new export to refresh]</span>`;
+    byline.innerHTML += ` <span style="color:var(--dim);font-size:12px;font-family:monospace;">[cached ${syncDate}]</span>`;
   }
   return true;
 }
@@ -2442,6 +2963,115 @@ function idbAutoLoad() {
   if (DATA && DATA.length > 0) return;
   tryLoadFromIDB();
 }
+
+</script>
+<script>
+(function(){
+  'use strict';
+
+  var SECS=['sec-kpis','sec-cluster','sec-activity','sec-growth',
+            'sec-scatter','sec-heatmap','sec-conversion',
+            'sec-leaderboards','sec-network','sec-hero'];
+
+  function g(id){ return document.getElementById(id); }
+
+  // ── Fixed position: align widget top with KPI row top ─────────
+  function setFixedTop(){
+    var nav  = g('secNav');
+    var kpis = g('sec-kpis');
+    if(!nav || !kpis) return;
+    // kpis rect relative to viewport at time of call (page not yet scrolled)
+    var kpisTop = kpis.getBoundingClientRect().top + window.pageYOffset;
+    nav.style.top = kpisTop + 'px';
+  }
+
+  // ── Click: scroll so section-label aligns with widget top ─────
+  document.querySelectorAll('.snav-item').forEach(function(item){
+    item.addEventListener('click', function(){
+      var id  = item.getAttribute('data-target');
+      var sec = g(id);
+      if(!sec) return;
+
+      var nav    = g('secNav');
+      var navTop = nav ? nav.getBoundingClientRect().top : 80;
+
+      // Scroll so the section's top edge sits at the same viewport Y as the nav top
+      var secAbsTop = sec.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({ top: secAbsTop - navTop, behavior: 'smooth' });
+    });
+  });
+
+  // ── Active highlight only (no repositioning) ──────────────────
+  var raf = false;
+  function updateActive(){
+    raf = false;
+    var nav = g('secNav'); if(!nav) return;
+    var winH = window.innerHeight;
+    var scrollY = window.pageYOffset;
+    var docH = document.documentElement.scrollHeight;
+
+    // If at the bottom of the page, always highlight last section
+    if(scrollY + winH >= docH - 4){
+      nav.querySelectorAll('.snav-item').forEach(function(el){
+        el.classList.toggle('active', el.getAttribute('data-target') === SECS[SECS.length-1]);
+      });
+      return;
+    }
+
+    var activeId = SECS[0];
+    for(var i = 0; i < SECS.length; i++){
+      var s = g(SECS[i]); if(!s) continue;
+      if(s.getBoundingClientRect().top <= winH * 0.45) activeId = SECS[i];
+    }
+    nav.querySelectorAll('.snav-item').forEach(function(el){
+      el.classList.toggle('active', el.getAttribute('data-target') === activeId);
+    });
+  }
+
+  window.addEventListener('scroll', function(){
+    if(!raf){ raf=true; requestAnimationFrame(updateActive); }
+  }, {passive:true});
+
+  // ── Init after layout settles ─────────────────────────────────
+  var attempts = 0;
+  var poll = setInterval(function(){
+    var nav  = g('secNav');
+    var kpis = g('sec-kpis');
+    if(nav && kpis && nav.offsetHeight > 0){
+      setFixedTop();
+      updateActive();
+      clearInterval(poll);
+    }
+    if(++attempts > 40) clearInterval(poll);
+  }, 150);
+
+  window.addEventListener('resize', setFixedTop);
+})();
+// ── Global data-tip tooltip ──────────────────────────────────────────────────
+(function _initGlobalTip(){
+  const tip = document.getElementById('globalTip');
+  if (!tip) return;
+  function show(e) {
+    const el = e.target.closest('[data-tip]');
+    if (!el) { tip.style.display='none'; return; }
+    tip.textContent = el.getAttribute('data-tip');
+    tip.style.display = 'block';
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    let x = e.clientX + 14, y = e.clientY - 10;
+    if (x + tw > window.innerWidth  - 8) x = e.clientX - tw - 14;
+    if (y + th > window.innerHeight - 8) y = e.clientY - th - 10;
+    tip.style.left = x + 'px';
+    tip.style.top  = y + 'px';
+  }
+  document.addEventListener('mousemove', show, {passive:true});
+  document.addEventListener('mouseleave', ()=>{ tip.style.display='none'; });
+  // Hide when cursor leaves a data-tip element
+  document.addEventListener('mouseout', function(e){
+    if (e.target.closest('[data-tip]') && !e.relatedTarget?.closest('[data-tip]')) {
+      tip.style.display='none';
+    }
+  }, {passive:true});
+})();
 
 </script>
 </body>
